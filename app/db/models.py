@@ -11,10 +11,10 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     high_score = db.Column(db.Integer, index = True)   ###Compare this to previous high score of another user
-    save_point = db.Column(db.Integer,index = True)                             ###check if higher then replace other user                                                   ###check if higher then replace other user
+    position = db.Column(db.Integer,index = True) 
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}, world={}, position={}>'.format(self.username, self.world, self.position)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -25,8 +25,6 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in}, Config.SECRET_KEY, algorithm='HS256').decode('utf-8')
 
-
-
     @staticmethod
     def verify_reset_password_token(token):
         try:
@@ -35,10 +33,18 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
+class World(db.Model):
+    seed = db.Column(db.String(64), primary_key=True)
+    hexes = db.relationship('Hex', backref='world', lazy='dynamic')
+    users = db.relationship('User', backref='world', lazy='dynamic')
+
+     def __repr__(self):
+        return '<World seed={}>'.format(self.seed)
+
 
 class Hex(db.Model):
-    id = db.Column(db.Integer, primary_key=True)      
-    broken = db.Column(db.Float, index=True) ###datetime.time objects i.e. if in past more than 't' then it is still broken 
+    id = db.Column(db.Integer, primary_key=True)
+    broken = db.Column(db.Float, index=True) 
 
     def __repr__(self):
         return '<Hex Number {}>'.format(self.id)
