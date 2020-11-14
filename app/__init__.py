@@ -3,6 +3,9 @@ from flask import Flask
 from config import Config
 
 from app.main import bp as main_bp
+from app.auth import bp as auth_bp
+from app.account import bp as acc_bp
+
 from app.db import db
 
 
@@ -13,6 +16,8 @@ def create_app(config_class=Config):
 
     # Register blueprints
     app.register_blueprint(main_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(acc_bp)
 
     # Initialise database object
     db.init_app(app)

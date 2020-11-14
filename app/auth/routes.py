@@ -4,7 +4,7 @@ from app.db import User, db
 from .forms import LoginForm, RegistrationForm
 
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('auth', __name__)
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
