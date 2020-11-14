@@ -7,6 +7,7 @@ from app.auth import bp as auth_bp
 from app.account import bp as acc_bp
 
 from app.db import db
+from app.auth import login
 
 
 def create_app(config_class=Config):
@@ -19,7 +20,8 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp)
     app.register_blueprint(acc_bp)
 
-    # Initialise database object
+    # Initialise objects
     db.init_app(app)
+    login.init_app(app)
 
     return app

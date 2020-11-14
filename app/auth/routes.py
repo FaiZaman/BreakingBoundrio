@@ -1,10 +1,17 @@
 from flask import render_template, flash, redirect, url_for, Blueprint
-from flask_login import current_user, login_user, logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user
 from app.db import User, db
 from .forms import LoginForm, RegistrationForm
 
 
 bp = Blueprint('auth', __name__)
+
+login = LoginManager()
+login.login_view = 'auth.login'
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
