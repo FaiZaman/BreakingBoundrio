@@ -4,7 +4,7 @@ from config import Config
 
 from app.main import bp as main_bp
 from app.db import db
-from app.auth import login
+from app.auth import login_manager
 
 
 def create_app(config_class=Config):
@@ -17,6 +17,6 @@ def create_app(config_class=Config):
 
     # Initialise objects
     db.init_app(app)
-    login.init_app(app)
+    login_manager.init_app(app)
 
     return app
