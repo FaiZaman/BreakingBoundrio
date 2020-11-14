@@ -1,9 +1,10 @@
 body {
-    font-family: "Jost", Arial, Helvetica, sans-serif;
+    font-family: Impact, Charcoal, sans-serifq;
     font-size: 14px;
   }
   body {
     margin: 0;
+    background-color: rgb(34, 21, 82);
   }
   
   header {
@@ -16,8 +17,9 @@ body {
   
   h1 {
     font-size: 2rem;
-  
+    text-align: center;
     margin: 0.75rem 1rem;
+    color: #d5d5e9;
   }
   
   h2 {
@@ -41,5 +43,12 @@ body {
   
   .palatinate {
     color: #682860;
+  }
+  
+  .titlecard {
+    font-family: Impact, Charcoal, sans-serif;
+  }
+  .white {
+    color: white;
   }
   
