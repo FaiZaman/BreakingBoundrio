@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+import time
+
 
 db = SQLAlchemy()
 
@@ -8,6 +10,8 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    high_score = db.Column(db.Integer, index = True)   ###Compare this to previous high score of another user
+    save_point = db.Column(db.Integer,index = True)                             ###check if higher then replace other user                                                   ###check if higher then replace other user
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -21,6 +25,8 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, expires_in=600):
         return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in}, Config.SECRET_KEY, algorithm='HS256').decode('utf-8')
 
+
+
     @staticmethod
     def verify_reset_password_token(token):
         try:
@@ -28,3 +34,21 @@ class User(UserMixin, db.Model):
         except:
             return
         return User.query.get(id)
+
+
+class Hex(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.Integer, index = True)       
+    broken = db.Column(db.Float, index=True) ###datetime.time objects i.e. if in past more than 't' then it is still broken 
+
+    def __repr__(self):
+        return '<Hex Number {}>'.format(self.id)
+
+    def breaking(self):
+        self.broken = time.time()
+
+
+        
+
+
+    
