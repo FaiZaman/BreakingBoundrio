@@ -109,14 +109,38 @@ $(document).ready(function(){
         };
     }
 
+
+    // =====================================================================================
+
+    var fillers = [
+        "A troll wearing a historian's coat appears from behind a wall! He shouts at you:",
+        "A mammoth with an equals sign on its forehead comes tumbling down a mountain! It roars, and\
+        you translate from Mammothish quickly:",
+        "Adolf Hitler himself rises from the ashes of his Führerbunker! Upon seeing you, he growls\
+        and mutters:",
+        "A tall Viking brandishing a protractor emerges from the valley below!\
+        He bellows in his Nordic tongue:",
+        "Shrek rises up from his musty swamp with a bloody ruler in his hand!\
+        Upon spotting you, he yells:",
+        "Pirates searching for their compass attack from behind a bush! They scream unintelligibly:",
+        "The Loch Ness Monster, wearing Cleopatra's necklace, impossibly spashes up from a tiny puddle!\
+        It wails loudly:",
+        "Medusa slithers up to you carrying a large history book! You glance away from her face just\
+        as she utters:",
+        "Ted Bundy appears and attempts to charm you with his collection of antiquities! His smooth\
+        voice sends chills down your spine:"
+    ];
+
     $("path").on('click', function(){
 
         // if this is a red hexagon, bring up notification that asks a question
         // TODO: this only runs when the player walks into this wall
         const filled = $(this).attr("class");
+        const random_filler = fillers[Math.floor(Math.random() * fillers.length)];
 
         if (filled){
             $(".question").show();
+            $(".modal-title").text(random_filler);
         }
         else {
             alert("not filled");
