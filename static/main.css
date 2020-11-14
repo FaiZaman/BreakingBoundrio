@@ -1,5 +1,5 @@
 body {
-  font-family: 'Arial';
+  font-family: 'Titillium Web', sans-serif;
   font-size: 14px;
 }
 body {
@@ -120,3 +120,16 @@ a {
 .largeFont{
   font-size: 2rem;
 }
+
+#descriptionPara {
+  color: white;
+  display: block;
+}
+
+.marginspace {
+  margin-top: 50px;
+  margin-right: 80px;
+  margin-bottom: 50px;
+  margin-left: 80px;
+}
+
