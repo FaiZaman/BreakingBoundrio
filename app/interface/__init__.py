@@ -1,3 +1,3 @@
 from . import routes
 
-from routes import *
+from .routes import *
