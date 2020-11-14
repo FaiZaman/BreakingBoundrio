@@ -5,6 +5,7 @@ from config import Config
 from app.main import bp as main_bp
 from app.auth import bp as auth_bp
 from app.account import bp as acc_bp
+from app.interface import bp as interface_bp
 
 from app.db import db
 from app.auth import login_manager
@@ -19,6 +20,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(acc_bp)
+    app.register_blueprint(interface_bp)
 
     # Initialise objects
     db.init_app(app)
