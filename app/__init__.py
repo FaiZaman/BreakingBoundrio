@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_migrate import Migrate
 
 from config import Config
 
@@ -10,6 +11,7 @@ from app.interface import bp as interface_bp
 from app.db import db
 from app.auth import login_manager
 
+migrate = Migrate()
 
 def create_app(config_class=Config):
     # Setup flask app and configure from config object
@@ -25,5 +27,6 @@ def create_app(config_class=Config):
     # Initialise objects
     db.init_app(app)
     login_manager.init_app(app)
+    migrate.init_app(app, db)
 
     return app
