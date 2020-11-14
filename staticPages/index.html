@@ -10,21 +10,24 @@
 {% block content %}
 <header class="alignment">
   <div>
-    <img class='logoImage' alt='logo' src="{{ url_for('static', filename='images/logoForPage.png')}}">
+    <img class='logoImage' alt='logo' src="{{ url_for('static', filename='images/manyHex.png')}}">
   </div>
   <div>
-    <h1 class="titlecard">breakingboundr.io</h1>
+    <h1 class="title">breakingboundr.io</h1>
   </div>
 </header>
 <main>
   <div class="card text-center lbbg">
     <div class="card-body">
-      <h5 class="card-title titlecard">Welcome to BreakingBoundrio!</h5>
+      <h5 class="card-title largeFont">Break Boundaries, Learn New Things</h5>
       <p class="card-text">
         An educational game where you have to use your knowledge to
-        break boundries and beat your high score!
+        break boundaries and beat your high score!
       </p>
       <a href="{{ url_for('main.game') }}" class="btn btn-secondary">Play </a>
+      <p>
+        No, we're not from Trevs...
+      </p>
     </div>
   </div>
 </main>
