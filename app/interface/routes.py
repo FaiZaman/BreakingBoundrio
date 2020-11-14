@@ -27,7 +27,7 @@ def user(username):
         abort(404)
 
 @bp.route('/world/check/<id>')
-def is_broken(id):
+def check_hex(id):
     t = Hex.query.filter_by(id=id).first()
     if t is None:
         abort(404)
@@ -57,6 +57,14 @@ def create_hex(id):
     db.session.add(t)
     db.session.commit()
     return '', 200
+
+@bp.route('/world/update/<seed>')
+def update_world(seed):
+    users = User.query.all()
+    response = {}
+    for user in users:
+        response[user.username] = user.position
+    return jsonify(response)
 
 
 @bp.route('/initialise')
