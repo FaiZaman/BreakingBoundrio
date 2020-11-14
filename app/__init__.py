@@ -12,7 +12,7 @@ from app.auth import login_manager
 
 def create_app(config_class=Config):
     # Setup flask app and configure from config object
-    app = Flask(__name__, template_folder='../staticPages')
+    app = Flask(__name__, template_folder='../staticPages', static_folder='../static')
     app.config.from_object(config_class)
 
     # Register blueprints
