@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
 
 {% block nav %}
 {% with current='home' %}
@@ -10,19 +11,18 @@
 {% block content %}
 <main>
     <div class='card gapsBetween'>
-        <form class='formStyle'>
-          <div class="class text-center">
-            <div class="form-group">
-                <label class='darkBlue titlecard' for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required="required">
-              </div>
-            <div class="form-group">
-                <label class='darkBlue titlecard' for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Submit</button>
-          </div>
-        </form>  
+        <form class="formStyle" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <dl class="form-group">
+                {{ render_field(form.email, class='form-control', placeholder='Email') }}
+                {{ render_field(form.password, class='form-control', placeholder='Password') }}
+            </dl>
+            <dl>
+                {{ render_field(form.remember_me, class='form-check d-inline checkbox') }}
+                {{ render_field(form.submit, class='btn btn-lg btn-primary btn-block') }}
+            </dl>
+        </form>
+        <p class="text-center">New user? <a href="{{ url_for('auth.register') }}">Click to register</a></p>
       </div>
       <!-- Modal -->
       <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
