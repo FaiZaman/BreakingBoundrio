@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% with current='home' %}
+{% include 'nav.html' %}
+{% endwith %}
+{% endblock %}
+
+
+{% block content %}
+<main>
+    <div class='card gapsBetween'>
+        <form class='formStyle'>
+          <div class="class text-center">
+            <div class="form-group">
+                <label class='darkBlue titlecard' for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+              </div>
+            <div class="form-group">
+                <label class='darkBlue titlecard' for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Submit</button>
+          </div>
+        </form>  
+      </div>
+      <!-- Modal -->
+      <div class="modal" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Submission Received</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body ">
+              <p>Thanks for submitting!</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</main>
+{% endblock %}
