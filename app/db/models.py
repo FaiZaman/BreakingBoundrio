@@ -39,7 +39,7 @@ class Hex(db.Model):
     broken = db.Column(db.Time, index=True) ###datetime.time objects i.e. if in past more than 't' then it is still broken 
 
     def __repr__(self):
-        return self.id
+        return '<Hex Number {}>'.format(self.id)
 
     def breaking(self):
         self.broken = datetime.time()
