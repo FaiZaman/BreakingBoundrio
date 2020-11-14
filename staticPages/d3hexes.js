@@ -5,7 +5,7 @@ var w = 960,
     x = w / z,
     y = h / z;
 
-var svg = d3.select("body").selectAll("div").select("svg")
+var svg = d3.select("body").append("svg")
     .attr("width", w)
     .attr("height", h);
 
