@@ -14,11 +14,14 @@ def validate_request(f):
         if not data == current_app.config['SECRET']:
             abort(401)
         return f(*args, **kwargs)
+
     return decorated_function
+
 
 @bp.route('/')
 def status():
     return 'True'
+
 
 @bp.route('/user/<username>')
 def user(username):
@@ -26,18 +29,20 @@ def user(username):
     if user is None:
         abort(404)
 
-@bp.route('/world/check/<id>')
+
+@bp.route('/World/check/<id>')
 def is_broken(id):
     t = Hex.query.filter_by(id=id).first()
     if t is None:
         abort(404)
     if t.broken is None:
-        t.broken = time.time() 
+        t.broken = time.time()
         db.session.commit()
-    if datetime.now() - datetime.utcfromtimestamp(t.broken) > timedelta(seconds = 60):
+    if datetime.now() - datetime.utcfromtimestamp(t.broken) > timedelta(seconds=60):
         return jsonify(True)
     else:
         return jsonify(False)
+
 
 @bp.route('/user/<username>/set_position/<id>')
 def set_position(id):
@@ -48,7 +53,8 @@ def set_position(id):
     db.session.commit()
     return '', 200
 
-@bp.route('/world/create/<id>')
+
+@bp.route('/World/create/<id>')
 def create_hex(id):
     t = Hex.query.filter_by(id=id).first()
     if t is not None:
@@ -72,3 +78,14 @@ def create_world():
 
 	db.session.commit()
 	return jsonify(dummy_list), 200
+
+# cheese routes are for testing basic RESTful IO
+@bp.route('/new_cheese', methods=['POST'])
+def new_cheese():
+    global cheese
+    cheese = request.form["newCheese"]
+    return "Now the cheese is " + cheese + "!"
+
+@bp.route('/cheese')
+def cheese():
+    return cheese
