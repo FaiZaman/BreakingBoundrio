@@ -1,5 +1,5 @@
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Titillium Web', sans-serif;
   font-size: 14px;
 }
 body {
@@ -42,14 +42,28 @@ p {
   padding: 0.25rem 0;
 }
 
-.titlecard {
-  font-family: Impact, Charcoal, sans-serif;
+.title {
+  font-family: 'Goldman', cursive;
 }
+
+.titlecard {
+  font-family: 'Goldman', cursive;
+  font-size: medium;
+}
+
 .white {
   color: white;
 }
   
 .logoImage {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 900px;
+  height: auto;
+}
+
+.smallLogo {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -85,3 +99,37 @@ p {
 .lbbg {
   background-color: #d5d5e9;
 }
+
+.imagesizing {
+  width: 300px;
+  height: auto;
+}
+
+.centered {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: auto;
+}
+
+a {
+  color: #d5d5e9;
+}
+
+.largeFont{
+  font-size: 2rem;
+}
+
+#descriptionPara {
+  color: white;
+  display: block;
+}
+
+.marginspace {
+  margin-top: 50px;
+  margin-right: 80px;
+  margin-bottom: 50px;
+  margin-left: 80px;
+}
+

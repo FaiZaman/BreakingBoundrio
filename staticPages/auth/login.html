@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block nav %}
+{% with current='home' %}
+{% include 'nav.html' %}
+{% endwith %}
+{% endblock %}
+
+
+{% block content %}
+<main>
+    <div class='card gapsBetween lbbg'>
+        <form class="formStyle" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <dl class="form-group">
+                {{ render_field(form.email, class='form-control titlecard', placeholder='Email') }}
+                {{ render_field(form.password, class='form-control titlecard', placeholder='Password') }}
+            </dl>
+            <dl>
+                {{ render_field(form.remember_me, class='form-check d-inline checkbox') }}
+                {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+            </dl>
+        </form>
+        <p class="text-center">New user? <a href="{{ url_for('auth.register') }}">Click to register</a></p>
+      </div>
+</main>
+{% endblock %}
