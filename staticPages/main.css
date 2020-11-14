@@ -4,6 +4,7 @@ body {
   }
   body {
     margin: 0;
+    background-color: rgb(199, 188, 240);
   }
   
   header {
@@ -16,8 +17,9 @@ body {
   
   h1 {
     font-size: 2rem;
-  
+    text-align: center;
     margin: 0.75rem 1rem;
+    color: #682860;
   }
   
   h2 {
@@ -41,5 +43,9 @@ body {
   
   .palatinate {
     color: #682860;
+  }
+  
+  .titlecard {
+    font-family: Impact, Charcoal, sans-serif;
   }
   
