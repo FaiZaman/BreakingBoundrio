@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-import time
+import datetime
 
 
 db = SQLAlchemy()
@@ -37,18 +37,15 @@ class User(UserMixin, db.Model):
 
 
 class Hex(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    position = db.Column(db.Integer, index = True)       
+    id = db.Column(db.Integer, primary_key=True)      
     broken = db.Column(db.Float, index=True) ###datetime.time objects i.e. if in past more than 't' then it is still broken 
 
     def __repr__(self):
         return '<Hex Number {}>'.format(self.id)
 
     def breaking(self):
-        self.broken = time.time()
+        self.broken = datetime.now().timestamp()
 
 
         
-
-
     

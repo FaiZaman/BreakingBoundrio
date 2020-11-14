@@ -60,15 +60,15 @@ def create_hex(id):
 
 
 @bp.route('/initialise')
-numpy.random.seed(seed=0)
 def create_world():
-    dummy_list = []
-    for i in range(100):
-      t = Hex.query.filter_by(i=id).first()
-      t.position = numpy.random.random(0,1000)
-      if t.position not in dummy_list:
-        dummy_list.append(t.position)
-        db.session.add(t) 
-    db.session.commit()
-    
-    return '', 200
+	numpy.random.seed(seed=0)
+	dummy_list = []
+	for i in range(100):
+		position = numpy.random.random(0,1000)
+		if position not in dummy_list:
+			h = Hex(id=i,broken=datetime.now()-timedelta(seconds=60))
+			dummy_list.append(position)
+			db.session.add(h)
+
+	db.session.commit()
+	return jsonify(dummy_list), 200
