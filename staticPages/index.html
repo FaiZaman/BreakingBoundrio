@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% with current='home' %}
+{% include 'nav.html' %}
+{% endwith %}
+{% endblock %}
+
+
+{% block content %}
+<header class="alignment">
+  <h1 class="titlecard">breakingboundr.io</h1>
+</header>
+<main>
+  <div class="card text-center">
+    <div class="card-header"></div>
+    <div class="card-body">
+      <h5 class="card-title">Welcome to BreakingBoundrio!</h5>
+      <p class="card-text">
+        This is an educational game where you have to use your knowledge to
+        break boundries and win!
+      </p>
+      <a href="game.html" class="btn btn-secondary">Play </a>
+    </div>
+    <div class="card-footer text-muted"></div>
+  </div>
+</main>
+{% endblock %}
