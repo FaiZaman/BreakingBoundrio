@@ -38,6 +38,7 @@ class User(UserMixin, db.Model):
 
 class Hex(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.Integer, index = True)       
     broken = db.Column(db.Float, index=True) ###datetime.time objects i.e. if in past more than 't' then it is still broken 
 
     def __repr__(self):

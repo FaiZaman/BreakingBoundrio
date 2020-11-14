@@ -3,7 +3,7 @@ from functools import wraps
 from app.db import User
 from app.db import Hex, db
 from datetime import datetime, timedelta
-
+from numpy import random
 
 bp = Blueprint('interface', __name__)
 
@@ -26,7 +26,7 @@ def user(username):
     if user is None:
         abort(404)
 
-@bp.route('/World/check/<id>')
+@bp.route('/world/check/<id>')
 def is_broken(id):
     t = Hex.query.filter_by(id=id).first()
     if t is None:
@@ -48,7 +48,7 @@ def set_position(id):
     db.session.commit()
     return '', 200
 
-@bp.route('/World/create/<id>')
+@bp.route('/world/create/<id>')
 def create_hex(id):
     t = Hex.query.filter_by(id=id).first()
     if t is not None:
@@ -59,3 +59,16 @@ def create_hex(id):
     return '', 200
 
 
+@bp.route('/initialise')
+numpy.random.seed(seed=0)
+def create_world():
+    dummy_list = []
+    for i in range(100):
+      t = Hex.query.filter_by(i=id).first()
+      t.position = numpy.random.random(0,1000)
+      if t.position not in dummy_list:
+        dummy_list.append(t.position)
+        db.session.add(t) 
+    db.session.commit()
+    
+    return '', 200
