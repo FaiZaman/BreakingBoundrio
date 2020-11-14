@@ -4,6 +4,7 @@ from config import Config
 
 from app.main import bp as main_bp
 from app.db import db
+from app.auth import login
 
 
 def create_app(config_class=Config):
@@ -14,7 +15,8 @@ def create_app(config_class=Config):
     # Register blueprints
     app.register_blueprint(main_bp)
 
-    # Initialise database object
+    # Initialise objects
     db.init_app(app)
+    login.init_app(app)
 
     return app
