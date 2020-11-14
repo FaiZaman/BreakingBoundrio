@@ -9,26 +9,26 @@
 {% block content %}
 <header class="titlecard">
   <h1>Rules</h1>
+  <h2 class='white'>
+    - Hints and tips on how to play! - 
+  </h2>
 </header>
 <main>
   <div class="card-group">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Controls</h5>
-        <p class="card-text">
-          <br>w = up</br>
-          <br>a = left</br>
-          <br>s = down</br>
-          <br>d = right</br>
-        </p>
+        <h5 class="card-title titlecard">Controls</h5>
+        <div>
+          <img class='logoImage' alt='wasd' src="{{ url_for('static', filename='images/wasd.jpg')}}">
+        </div>
         <p class="card-text">
           <small class="text-muted">Details here</small>
         </p>
       </div>
     </div>
-    <div class="card">
+    <div class="card  lbbg">
       <div class="card-body">
-        <h5 class="card-title">Break Down The Boundaries!</h5>
+        <h5 class="card-title titlecard">Break Down The Boundaries!</h5>
         <p class="card-text">
           Travel around the board, landing on hexagons. Answer as many questions as you can to get a high score!
         </p>
@@ -39,7 +39,7 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">What will I learn?</h5>
+        <h5 class="card-title titlecard">What will I learn?</h5>
         <p class="card-text">
           Practice your mathematics skills, compete with others to get the best score you can.
         </p>
