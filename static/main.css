@@ -34,16 +34,12 @@ h3 {
 }
 
 h5 {
-  color: #682860;
+  color: #221552;
 }
 
 p {
   font-size: 1rem;
   padding: 0.25rem 0;
-}
-
-.palatinate {
-  color: #682860;
 }
 
 .titlecard {
@@ -59,4 +55,33 @@ p {
   margin-right: auto;
   width: 300px;
   height: auto;
+}
+
+.formStyle {
+  padding-top: 50px;
+  padding-right: 80px;
+  padding-bottom: 50px;
+  padding-left: 80px;
+  background-color: #d5d5e9;
+  font-size: 1.4rem;
+  border-color: #221552;
+}
+
+.gapsBetween {
+  margin-top: 50px;
+  margin-right: 80px;
+  margin-bottom: 50px;
+  margin-left: 80px;
+}
+
+.lightblue {
+  color: #d5d5e9;
+}
+
+.darkblue {
+  color: #221552;
+}
+
+.lbbg {
+  background-color: #d5d5e9;
 }
