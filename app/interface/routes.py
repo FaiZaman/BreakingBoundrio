@@ -3,7 +3,7 @@ from functools import wraps
 from app.db import User
 from app.db import Hex, db
 from datetime import datetime, timedelta
-from numpy import random
+import numpy 
 
 bp = Blueprint('interface', __name__)
 
@@ -64,9 +64,9 @@ def create_world():
 	numpy.random.seed(seed=0)
 	dummy_list = []
 	for i in range(100):
-		position = numpy.random.random(0,1000)
+		position = numpy.random.randint(0,1000)
 		if position not in dummy_list:
-			h = Hex(id=i,broken=datetime.now()-timedelta(seconds=60))
+			h = Hex(id=i,broken=(datetime.now()-timedelta(seconds=60)).timestamp())
 			dummy_list.append(position)
 			db.session.add(h)
 
