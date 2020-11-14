@@ -116,3 +116,7 @@ p {
 a {
   color: #d5d5e9;
 }
+
+.largeFont{
+  font-size: 2rem;
+}
