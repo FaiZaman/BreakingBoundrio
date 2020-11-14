@@ -5,6 +5,7 @@ import datetime
 
 db = SQLAlchemy()
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -33,6 +34,7 @@ class User(UserMixin, db.Model):
             return
         return User.query.get(id)
 
+
 class World(db.Model):
     seed = db.Column(db.String(64), primary_key=True)
     hexes = db.relationship('Hex', backref='world', lazy='dynamic')
@@ -51,6 +53,17 @@ class Hex(db.Model):
 
     def breaking(self):
         self.broken = datetime.now().timestamp()
+
+
+class QuestionList(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    questions = db.relationship('Question', backref='list', lazy='dynamic')
+
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.Text())
+    answer = db.Column(db.Text())
 
 
         
