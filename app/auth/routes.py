@@ -4,12 +4,12 @@ from app.db import User, db
 from .forms import LoginForm, RegistrationForm
 
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('auth', __name__)
 
-login = LoginManager()
-login.login_view = 'auth.login'
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
 
-@login.user_loader
+@login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
