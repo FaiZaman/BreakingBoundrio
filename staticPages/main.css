@@ -1,0 +1,45 @@
+body {
+    font-family: "Jost", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+  }
+  body {
+    margin: 0;
+  }
+  
+  header {
+    padding: 1.5rem 0;
+  }
+  
+  main {
+    margin: 1rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  
+    margin: 0.75rem 1rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  
+    margin: 0.5rem 1rem;
+  }
+  
+  h3 {
+    font-size: 1.4rem;
+  }
+  
+  h5 {
+    color: #682860;
+  }
+  
+  p {
+    font-size: 1rem;
+    padding: 0.25rem 0;
+  }
+  
+  .palatinate {
+    color: #682860;
+  }
+  
