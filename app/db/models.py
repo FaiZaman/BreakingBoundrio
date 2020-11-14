@@ -40,7 +40,7 @@ class World(db.Model):
     hexes = db.relationship('Hex', backref='world', lazy='dynamic')
     users = db.relationship('User', backref='world', lazy='dynamic')
 
-     def __repr__(self):
+    def __repr__(self):
         return '<World seed={}>'.format(self.seed)
 
 
