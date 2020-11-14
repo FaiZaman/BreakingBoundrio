@@ -22,7 +22,7 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(acc_bp)
-    app.register_blueprint(interface_bp)
+    app.register_blueprint(interface_bp, url_prefix='/interface')
 
     # Initialise objects
     db.init_app(app)
