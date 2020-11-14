@@ -7,8 +7,13 @@ import traceback
 import json
 
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('acc', __name__)
 
 @bp.route('/account', methods=['GET', 'POST'])
 def account():
-    ####display account info, inventory, profile picture etc.
+    if current_user.is_authenticated():
+        return str(current_user.username)
+    
+    
+    
+     ####display account info, inventory, profile picture etc.

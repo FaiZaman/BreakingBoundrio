@@ -4,7 +4,7 @@ from app.db import User, db
 from .forms import LoginForm, RegistrationForm
 
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('auth', __name__)
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
