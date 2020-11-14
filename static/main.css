@@ -57,6 +57,14 @@ p {
   height: auto;
 }
 
+.smallLogo {
+  display: inline;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100px;
+  height: auto;
+}
+
 .formStyle {
   padding-top: 50px;
   padding-right: 80px;
