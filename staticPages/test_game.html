@@ -49,17 +49,15 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title">Break this wall by answering the question!</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
 				</div>
 				<div class="modal-body">
 					<p>In what year did the Second World War begin?</p>
-					<input type="text" class="form-control">
+					<input type="text" class="form-control" id="answer">
+					<div class="error">You must enter an answer!</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary">Submit your answer</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Run away</button>
+					<button type="button" class="btn btn-primary" id="submit-answer">Submit your answer</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal" id="run">Run away</button>
 				</div>
 			</div>
 		</div>

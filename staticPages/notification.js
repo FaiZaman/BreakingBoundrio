@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
     $(".question").hide();
+    $(".error").hide();
 
     var width = $(window).width() - 20,
     height = $(window).height() - 20,
@@ -110,15 +111,37 @@ $(document).ready(function(){
 
     $("path").on('click', function(){
 
-        // if this is a red hexagon, bring up notification that asks a question 
+        // if this is a red hexagon, bring up notification that asks a question
+        // TODO: this only runs when the player walks into this wall
         const filled = $(this).attr("class");
 
         if (filled){
             $(".question").show();
         }
-        else{
+        else {
             alert("not filled");
         }
+    });
+
+    $("#submit-answer").on('click', function(){
+
+        // TODO: verify answer is correct, either from database or clientside
+        if ($("#answer").val() == ""){
+            $(".error").show();
+        }
+        else{
+            $(".question").hide();
+            $(".error").hide();
+        }
+
+    });
+
+    $("#run").on('click', function(){
+        
+        $(".question").hide();
+
+        // what to do when running away?
+
     });
 
 });
