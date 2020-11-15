@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% with current='home' %}
+{% include 'nav.html' %}
+{% endwith %}
+{% endblock %}
+
+
+{% block content %}
+<header class="alignment">
+  <div>
+    <img class='logoImage' alt='logo' src="{{ url_for('static', filename='images/manyHex.png')}}">
+  </div>
+  <div>
+    <h1 class="title">breakingboundr.io</h1>
+  </div>
+</header>
+<main>
+  <div class="card text-center lbbg">
+    <div class="card-body">
+      <h5 class="card-title largeFont">{{ list.title }}: Questions</h5>
+        <ul class="list-group list-group-flush">
+            {% for question in list.questions %}
+            <li class="list-group-item list-group-item-active"><a href="{{ url_for('questions.edit_question', list_id=list.id, question_id=question.id)}}">{{ question.question }}</a>: {{ question.answer }}</li>
+            {% endfor %}
+            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_question', list_id=list.id)}}">Add question</a>
+        </ul>
+    </div>
+  </div>
+</main>
+{% endblock %}

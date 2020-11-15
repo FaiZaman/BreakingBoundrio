@@ -57,13 +57,21 @@ class Hex(db.Model):
 
 class QuestionList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(64))
     questions = db.relationship('Question', backref='list', lazy='dynamic')
+
+    def __repr__(self):
+        return '<QuestionList length={}>'.format(len(self.questions))
 
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.Text())
     answer = db.Column(db.Text())
+    list_id = db.Column(db.Integer, db.ForeignKey(QuestionList.id))
+
+    def __repr__(self):
+        return '<Question preview={}>'.format(self.question[:10])
 
 
         

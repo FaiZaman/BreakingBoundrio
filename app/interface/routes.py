@@ -1,7 +1,6 @@
 from flask import Blueprint, current_app, abort, request, jsonify
 from functools import wraps
-from app.db import User
-from app.db import Hex, db
+from app.db import db, User, Hex, QuestionList
 from datetime import datetime, timedelta
 import numpy 
 
@@ -78,6 +77,28 @@ def create_world():
 
 	db.session.commit()
 	return jsonify(dummy_list), 200
+
+
+@bp.route('/questions/get_lists')
+def get_question_lists():
+    qlists = QuestionList.query.all()
+    if qlists is None:
+        abort(404)
+    lists = {}
+    for qlist in qlists:
+        lists[qlist.id] = qlist.title
+    return jsonify(lists)
+
+
+@bp.route('/questions/get_list/<id>')
+def get_question_list(id):
+    qlist = QuestionList.query.filter_by(id=id).first()
+    if qlist is None:
+        abort(404)
+    questions = []
+    for question in qlist.questions:
+        questions.append({'question': question.question, 'answer': question.answer})
+    return jsonify(questions)
 
 # cheese routes are for testing basic RESTful IO
 @bp.route('/new_cheese', methods=['POST'])
