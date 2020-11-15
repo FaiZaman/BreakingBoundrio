@@ -27,15 +27,16 @@ def user(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
+    return '', 200
 
 
-@bp.route('/World/check/<id>')
-def is_broken(id):
-    t = Hex.query.filter_by(id=id).first()
+@bp.route('/world/<seed>/check/<position>')
+def check_hex(seed, position):
+    t = Hex.query.filter_by(position=position, world_seed=seed).first()
     if t is None:
         abort(404)
     if t.broken is None:
-        t.broken = time.time()
+        t.broken = (datetime.now() - timedelta(seconds=60)).timestamp()
         db.session.commit()
     if datetime.now() - datetime.utcfromtimestamp(t.broken) > timedelta(seconds=60):
         return jsonify(True)
@@ -43,20 +44,20 @@ def is_broken(id):
         return jsonify(False)
 
 
-@bp.route('/user/<username>/set_position/<id>')
-def set_position(id):
+@bp.route('/user/<username>/set_position/<position>')
+def set_position(username, position):
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
-    user.save_point = id
+    user.position = position
     db.session.commit()
     return '', 200
 
 
-@bp.route('/World/create/<id>')
-def create_hex(id):
-    t = Hex.query.filter_by(id=id).first()
-    if t is not None:
+@bp.route('/world/<seed>/break/<id>')
+def break_hex(id):
+    t = Hex.query.filter_by(position=id, world_seed=seed).first()
+    if t is None:
         abort(404)
     t = Hex(broken=datetime.now().timestamp())
     db.session.add(t)
@@ -64,18 +65,22 @@ def create_hex(id):
     return '', 200
 
 
-@bp.route('/initialise')
-def create_world():
-	numpy.random.seed(seed=0)
-	dummy_list = []
-	for i in range(100):
-		position = numpy.random.randint(0,1000)
-		if position not in dummy_list:
-			h = Hex(id=i,broken=(datetime.now()-timedelta(seconds=60)).timestamp())
-			dummy_list.append(position)
-			db.session.add(h)
-
-	db.session.commit()
+@bp.route('/initialise/<seed>')
+def create_world(seed):
+    world = World.query.filter_by(seed=seed).first()
+    if world is None:
+        world = World(seed=seed)
+    hexes = world.hexes
+    if len(hexes) != 100:
+    	numpy.random.seed(seed=seed)
+    	dummy_list = []
+    	for i in range(100):
+    		position = numpy.random.randint(0,1000)
+    		if position not in dummy_list:
+    			h = Hex(position=i,broken=(datetime.now()-timedelta(seconds=60)).timestamp(), world=world)
+    			dummy_list.append(position)
+    			db.session.add(h)
+    	db.session.commit()
 	return jsonify(dummy_list), 200
 
 

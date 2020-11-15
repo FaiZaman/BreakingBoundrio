@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, jsonify, redirect, url_for, request
-from app.db import db, QuestionList, Question
-from .forms import CreateListForm, CreateQuestionForm
+from app.db import db, QuestionList, Question, FlavourText
+from .forms import CreateListForm, CreateQuestionForm, CreateFlavourTextForm
 
 
 bp = Blueprint('questions', __name__)
@@ -43,7 +43,7 @@ def delete_list(list_id):
     return redirect(url_for('questions.view_lists'))
 
 
-@bp.route('/list/<list_id>/create', methods=['GET', 'POST'])
+@bp.route('/list/<list_id>/create_question', methods=['GET', 'POST'])
 def create_question(list_id):
     form = CreateQuestionForm(request.form)
     if form.validate_on_submit():
@@ -57,11 +57,11 @@ def create_question(list_id):
     return render_template('questions/create_question.html', form=form)
 
 
-@bp.route('/list/<list_id>/edit/<question_id>', methods=['GET', 'POST'])
+@bp.route('/list/<list_id>/edit_question/<question_id>', methods=['GET', 'POST'])
 def edit_question(list_id, question_id):
     qlist = QuestionList.query.filter_by(id=list_id).first()
     question = Question.query.filter_by(id=question_id).first()
-    form = CreateQuestionForm(request.form, obj=question)
+    form = CreateQuestionForm(obj=question)
     if form.validate_on_submit():
         question.question = form.question.data
         question.answer = form.answer.data
@@ -79,11 +79,56 @@ def view_question(list_id, question_id):
     return render_template('questions/question.html', list=qlist, question=question)
 
 
-@bp.route('/list/<list_id>/delete/<question_id>')
+@bp.route('/list/<list_id>/delete_question/<question_id>')
 def delete_question(list_id, question_id):
     question = Question.query.filter_by(id=question_id)
     if question is not None:
         question.delete()
+        db.session.commit()
+    return redirect(url_for('questions.view_list', list_id=list_id))
+
+
+@bp.route('/list/<list_id>/create_flavour_text', methods=['GET', 'POST'])
+def create_flavour_text(list_id):
+    form = CreateFlavourTextForm(request.form)
+    if form.validate_on_submit():
+        flavour_text = FlavourText()
+        flavour_text.text = form.text.data
+        flavour_text.category = form.category.data
+        flavour_text.list = QuestionList.query.filter_by(id=list_id).first()
+        db.session.add(flavour_text)
+        db.session.commit()
+        return redirect(url_for('questions.view_list', list_id=list_id))
+    return render_template('questions/create_flavour_text.html', form=form)
+
+
+@bp.route('/list/<list_id>/edit_flavour_text/<flavour_text_id>', methods=['GET', 'POST'])
+def edit_flavour_text(list_id, flavour_text_id):
+    qlist = QuestionList.query.filter_by(id=list_id).first()
+    flavour_text = FlavourText.query.filter_by(id=flavour_text_id).first()
+    form = CreateFlavourTextForm(request.form, obj=flavour_text)
+    if form.validate_on_submit():
+        flavour_text.text = form.text.data
+        flavour_text.category = form.category.data
+        flavour_text.list = QuestionList.query.filter_by(id=list_id).first()
+        db.session.add(flavour_text)
+        db.session.commit()
+        return redirect(url_for('questions.view_list', list_id=list_id))
+    return render_template('questions/edit_flavour_text.html', form=form, list=qlist, flavour_text=flavour_text)
+
+
+@bp.route('/list/<list_id>/flavour_text/<flavour_text_id>')
+def view_flavour_text(list_id, flavour_text_id):
+    qlist = QuestionList.query.filter_by(id=list_id).first()
+    flavour_text = FlavourText.query.filter_by(id=flavour_text_id).first()
+    return render_template('questions/flavour_text.html', list=qlist, flavour_text=flavour_text)
+
+
+@bp.route('/list/<list_id>/delete_flavour_text/<flavour_text_id>')
+def delete_flavour_text(list_id, flavour_text_id):
+    flavour_text = FlavourText.query.filter_by(id=flavour_text_id)
+    if flavour_text is not None:
+        flavour_text.delete()
         db.session.commit()
     return redirect(url_for('questions.view_list', list_id=list_id))
 

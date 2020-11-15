@@ -12,3 +12,9 @@ class CreateQuestionForm(FlaskForm):
     question = TextAreaField('Question', validators=[DataRequired()])
     answer = TextAreaField('Answer', validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+
+class CreateFlavourTextForm(FlaskForm):
+    text = TextAreaField('Flavour Text', validators=[DataRequired()])
+    category = StringField('Category', validators=[DataRequired()])
+    submit = SubmitField('Submit')

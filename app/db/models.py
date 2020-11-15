@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     high_score = db.Column(db.Integer, index = True)   ###Compare this to previous high score of another user
-    position = db.Column(db.Integer,index = True) 
+    position = db.Column(db.Integer, index = True) 
     world_seed = db.Column(db.Integer, db.ForeignKey('world.seed'))
 
     def __repr__(self):
@@ -38,6 +38,7 @@ class User(UserMixin, db.Model):
 
 class Hex(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.Integer)
     broken = db.Column(db.Float, index=True) 
     world_seed = db.Column(db.Integer, db.ForeignKey('world.seed'))
 
@@ -61,6 +62,7 @@ class QuestionList(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(64))
     questions = db.relationship('Question', backref='list', lazy='dynamic')
+    flavour_text = db.relationship('FlavourText', backref='list', lazy='dynamic')
 
     def __repr__(self):
         return '<QuestionList length={}>'.format(len(self.questions))
@@ -76,5 +78,13 @@ class Question(db.Model):
         return '<Question preview={}>'.format(self.question[:10])
 
 
+class FlavourText(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text())
+    category = db.Column(db.String(64))
+    list_id = db.Column(db.Integer, db.ForeignKey(QuestionList.id))
+
+    def __repr__(self):
+        return '<FlavourText category={} preview={}>'.format(self.category, self.text[:10])
         
     
