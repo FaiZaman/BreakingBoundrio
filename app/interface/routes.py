@@ -30,9 +30,9 @@ def user(username):
     return '', 200
 
 
-@bp.route('/world/<seed>/check/<id>')
-def is_broken(seed, id):
-    t = Hex.query.filter_by(id=id, world_seed=seed).first()
+@bp.route('/world/<seed>/check/<position>')
+def check_hex(seed, position):
+    t = Hex.query.filter_by(position=position, world_seed=seed).first()
     if t is None:
         abort(404)
     if t.broken is None:
@@ -54,10 +54,10 @@ def set_position(username, position):
     return '', 200
 
 
-@bp.route('/world/<seed>/create/<id>')
-def create_hex(id):
+@bp.route('/world/<seed>/break/<id>')
+def break_hex(id):
     t = Hex.query.filter_by(position=id, world_seed=seed).first()
-    if t is not None:
+    if t is None:
         abort(404)
     t = Hex(broken=datetime.now().timestamp())
     db.session.add(t)
@@ -65,18 +65,22 @@ def create_hex(id):
     return '', 200
 
 
-@bp.route('/initialise')
-def create_world():
-	numpy.random.seed(seed=0)
-	dummy_list = []
-	for i in range(100):
-		position = numpy.random.randint(0,1000)
-		if position not in dummy_list:
-			h = Hex(id=i,broken=(datetime.now()-timedelta(seconds=60)).timestamp())
-			dummy_list.append(position)
-			db.session.add(h)
-
-	db.session.commit()
+@bp.route('/initialise/<seed>')
+def create_world(seed):
+    world = World.query.filter_by(seed=seed).first()
+    if world is None:
+        world = World(seed=seed)
+    hexes = world.hexes
+    if len(hexes) != 100:
+    	numpy.random.seed(seed=seed)
+    	dummy_list = []
+    	for i in range(100):
+    		position = numpy.random.randint(0,1000)
+    		if position not in dummy_list:
+    			h = Hex(position=i,broken=(datetime.now()-timedelta(seconds=60)).timestamp(), world=world)
+    			dummy_list.append(position)
+    			db.session.add(h)
+    	db.session.commit()
 	return jsonify(dummy_list), 200
 
 
