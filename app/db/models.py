@@ -12,7 +12,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     high_score = db.Column(db.Integer, index = True)   ###Compare this to previous high score of another user
-    position = db.Column(db.Integer,index = True) 
+    position = db.Column(db.Integer, index = True) 
     world_seed = db.Column(db.Integer, db.ForeignKey('world.seed'))
 
     def __repr__(self):
@@ -38,6 +38,7 @@ class User(UserMixin, db.Model):
 
 class Hex(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    position = db.Column(db.Integer)
     broken = db.Column(db.Float, index=True) 
     world_seed = db.Column(db.Integer, db.ForeignKey('world.seed'))
 
