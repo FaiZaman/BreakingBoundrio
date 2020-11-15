@@ -3,6 +3,53 @@ $(document).ready(function(){
     $(".question").hide();
     $(".error").hide();
 
+    let question_data = []; // array of questions
+
+    $.ajax({
+        type : 'GET',
+        url : "/questions/test",
+        contentType: 'application/json;',
+        success: function(data){
+            question_data = data;
+            console.log(data);
+        },
+        failure: function(data){
+            console.log("Something went wrong!");
+        }
+      });
+
+    function getQuestionsList(id){
+        $.ajax({
+            type : 'GET',
+            url : "/interface/questions/get_list/" + id,
+            contentType: 'application/json;',
+            success: function(data){
+                question_data = data;
+                console.log(data);
+            },
+            failure: function(data){
+                console.log("Something went wrong!");
+            }
+          });
+    }
+
+    function getQuestionLists(){
+        $.ajax({
+            type : 'GET',
+            url : "/interface/questions/get_lists",
+            contentType: 'application/json;',
+            success: function(data){
+                question_data = data;
+                console.log(data);
+            },
+            failure: function(data){
+                console.log("Something went wrong!");
+            }
+          });
+    }
+
+    //getQuestionLists();
+
     var width = $(window).width() - 20,
     height = $(window).height() - 20,
     radius = 20;
@@ -137,10 +184,15 @@ $(document).ready(function(){
         // TODO: this only runs when the player walks into this wall
         const filled = $(this).attr("class");
         const random_filler = fillers[Math.floor(Math.random() * fillers.length)];
+        const random_question_data = question_data[Math.floor(Math.random() * question_data.length)];
+
+        const question = random_question_data['question'];
+        const answer = random_question_data['answer'];
 
         if (filled){
             $(".question").show();
             $(".modal-title").text(random_filler);
+            $(".question-text").text(question);
         }
         else {
             alert("not filled");
@@ -159,14 +211,29 @@ $(document).ready(function(){
     });
 
     function verifyAnswer(){
+        const question = $(".question-text").text();
+        const userAnswer = $("#answer").val();
+
+        let realAnswer = question_data.find(data_item => data_item.question == question);
+        realAnswer = realAnswer['answer'];
+
         // TODO: verify answer is correct, either from database or clientside
-        if ($("#answer").val() == ""){
+        if (userAnswer == ""){
             $(".error").show();
         }
-        else{
+        else {
+            if (userAnswer == realAnswer){
+                alert("You were right!");
+            }
+            else{
+                alert("You were wrong!");
+            }
             $(".question").hide();
             $(".error").hide();
         }
     }
+
+
+
 
 });

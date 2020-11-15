@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block nav %}
+{% with current='rules' %}
+{% include 'nav.html' %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<header class="title">
+  <div>
+    <img class='smallLogo' alt='logo' src="{{ url_for('static', filename='images/logoForPage.png')}}">
+  </div>
+  <h1>HOW TO PLAY</h1>
+</header>
+<main>
+  <body>
+    <div class="card-group">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title titlecard largeFont centered">CONTROLS</h5>
+          <div>
+            <img class='imagesizing centered' alt='ctrls' src="{{ url_for('static', filename='images/controls.png')}}">
+          </div>
+          <p class="card-text centered">
+            The keys shown above link to the directions you will travel along the board.
+          </p>
+        </div>
+      </div>
+      <div class="card lbbg">
+        <div class="card-body">
+          <h5 class="card-title titlecard largeFont centered">INSTRUCTIONS</h5>
+          <p class="card-text centered">
+            <ol class='list-group list-group-flush medFont'>
+              <li class="list-group-item">1) Land on a hexagon.</li>
+              <li class="list-group-item">2) A question will appear - answer it!</li>
+              <li class="list-group-item">3) Move to the next hexagon.</li>
+              <li class="list-group-item">4) Score highly by answering more questions correctly.</li>
+            </ol>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <div class="card card-grouptext-center centered dbbg">
+    <div class="card-body white">
+      <p id='italicsFont'>
+        Are you ready to break boundaries?
+      </p>
+      <a href="game.html" class="btn btn-light btn-lg">Play Now</a>
+    </div>
+  </div>
+</main>
+{% endblock %}

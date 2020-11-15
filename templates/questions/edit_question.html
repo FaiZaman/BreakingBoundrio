@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% from '_formhelpers.html' import render_field %}
+
+{% block nav %}
+{% with current='home' %}
+{% include 'nav.html' %}
+{% endwith %}
+{% endblock %}
+
+
+{% block content %}
+<header class="alignment">
+  <div>
+    <img class='logoImage' alt='logo' src="{{ url_for('static', filename='images/manyHex.png')}}">
+  </div>
+  <div>
+    <h1 class="title">breakingboundr.io</h1>
+  </div>
+</header>
+<main>
+  <div class='card gapsBetween lbbg'>
+      <form class="formStyle" action="" method="post" novalidate>
+          {{ form.hidden_tag() }}
+          <dl class="form-group">
+              {{ render_field(form.question, class='form-control titlecard', placeholder='Question') }}
+              {{ render_field(form.answer, class='form-control titlecard', placeholder='Answer') }}
+          </dl>
+          <dl>
+              {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+          </dl>
+      </form>
+      <p class="text-center"><a href="{{ url_for('questions.delete_question', list_id=list.id, question_id=question.id)}}">Delete question</a></p>
+    </div>
+</main>
+{% endblock %}
