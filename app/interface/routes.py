@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, abort, request, jsonify
 from functools import wraps
-from app.db import db, User, Hex, QuestionList
+from app.db import db, User, Hex, QuestionList, World
 from datetime import datetime, timedelta
 import numpy 
 
@@ -67,10 +67,11 @@ def break_hex(id):
 
 @bp.route('/initialise/<seed>')
 def create_world(seed):
+    seed = int(seed)
     world = World.query.filter_by(seed=seed).first()
     if world is None:
         world = World(seed=seed)
-    hexes = world.hexes
+    hexes = world.hexes.all()
     if len(hexes) != 100:
     	numpy.random.seed(seed=seed)
     	dummy_list = []
