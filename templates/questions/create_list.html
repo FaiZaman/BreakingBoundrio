@@ -22,10 +22,13 @@
       <form class="formStyle" action="" method="post" novalidate>
           {{ form.hidden_tag() }}
           <dl class="form-group">
-              {{ render_field(form.title, class='form-control titlecard', placeholder='Enter your question & corresponding answer') }}
+            {{ render_field(form.title, class='form-control titlecard', placeholder='What is your question list about?') }}
           </dl>
           <dl>
-              {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+            {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+            <div class="text-center">
+              <a href="{{ url_for('questions.view_lists') }}">Cancel</a>
+            </div>
           </dl>
       </form>
     </div>

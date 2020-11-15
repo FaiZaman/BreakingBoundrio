@@ -29,6 +29,9 @@
         </dl>
         <dl>
           {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+          <div class="text-center">
+            <a href="{{ url_for('questions.view_list', list_id=list.id) }}">Cancel</a>
+          </div>
         </dl>
       </form>
     </div>

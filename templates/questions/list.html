@@ -17,26 +17,50 @@
   </div>
 </header>
 <main>
-  <div class="card text-center lbbg">
-    <div class="card-body">
-      <h5 class="card-title largeFont">{{ list.title }}: Questions</h5>
-        <ul class="list-group list-group-flush">
-            {% for question in list.questions %}
-            <li class="list-group-item list-group-item-active"><a href="{{ url_for('questions.edit_question', list_id=list.id, question_id=question.id)}}">{{ question.question }}</a>: {{ question.answer }}</li>
-            {% endfor %}
-            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_question', list_id=list.id)}}">Add question</a>
-        </ul>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-5 offset-1 mb-3">
+        <div class="card text-center lbbg">
+          <div class="card-body">
+            <h5 class="card-title largeFont"><a href="{{ url_for('questions.view_lists') }}">View all lists</a></h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-5 mb-3">
+        <div class="card text-center lbbg">
+          <div class="card-body">
+            <h5 class="card-title largeFont"><a href="{{ url_for('questions.delete_list', list_id=list.id) }}">Delete this list</a></h5>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="card text-center lbbg">
-    <div class="card-body">
-      <h5 class="card-title largeFont">{{ list.title }}: Flavour Text</h5>
-        <ul class="list-group list-group-flush">
-            {% for ftext in list.flavour_text %}
-            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.edit_flavour_text', list_id=list.id, flavour_text_id=ftext.id)}}">{{ ftext.text }}</a>
-            {% endfor %}
-            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_flavour_text', list_id=list.id)}}">Add flavour text</a>
-        </ul>
+    <div class="row">
+      <div class="col-5 offset-1">
+        <div class="card text-center lbbg">
+          <div class="card-body">
+            <h5 class="card-title largeFont">{{ list.title }}: Questions</h5>
+              <ul class="list-group list-group-flush">
+                  {% for question in list.questions %}
+                  <li class="list-group-item list-group-item-active"><a href="{{ url_for('questions.edit_question', list_id=list.id, question_id=question.id)}}">{{ question.question }}</a>: {{ question.answer }}</li>
+                  {% endfor %}
+                  <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_question', list_id=list.id)}}">Add question</a>
+              </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="card text-center lbbg">
+          <div class="card-body">
+            <h5 class="card-title largeFont">{{ list.title }}: Flavour Text</h5>
+              <ul class="list-group list-group-flush">
+                  {% for ftext in list.flavour_text %}
+                  <a class="list-group-item list-group-item-active" href="{{ url_for('questions.edit_flavour_text', list_id=list.id, flavour_text_id=ftext.id)}}">{{ ftext.text }}</a>
+                  {% endfor %}
+                  <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_flavour_text', list_id=list.id)}}">Add flavour text</a>
+              </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>
