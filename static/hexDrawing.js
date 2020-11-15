@@ -12,6 +12,8 @@ var centerHex = playerPos;
 
 console.log("Playerpos", playerPos, "centerHex", centerHex);
 var questionActive = false;
+var obstacles = [];
+var world = 0;
 
 
 let question_data = []; // array of questions
@@ -28,6 +30,23 @@ $.ajax({
         console.log("Something went wrong!");
     }
 });
+
+$.ajax({
+        type : 'GET',
+        url : "/interface/initialise/"+world,
+        contentType: 'application/json;',
+        success: function(data){
+            obstacles = data;
+            console.log(data);
+            draw();
+        },
+        failure: function(){
+            console.log("Something went wrong!");
+        }
+});
+
+
+
 
 function getQuestionsList(id){
     $.ajax({
@@ -91,7 +110,7 @@ function draw() {
         })
         .attr("class", function (d) {
             var cls = d === playerPos ? "player " : "";
-            cls += Math.random() > 0.5 ? "fill" : "obstacle";
+            cls += obstacles.includes(d) ? "obstacle" : "fill";
             // console.log(d, cls);
             return cls;
         })
@@ -102,8 +121,6 @@ function draw() {
         .attr("stroke", "black")
         .on("click", onclick);
 }
-
-draw();
 
 function onclick(d) {
     var tile = $("#" + d);
