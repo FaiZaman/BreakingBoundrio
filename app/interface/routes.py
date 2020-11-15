@@ -27,15 +27,16 @@ def user(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
+    return '', 200
 
 
-@bp.route('/World/check/<id>')
-def is_broken(id):
-    t = Hex.query.filter_by(id=id).first()
+@bp.route('/world/<seed>/check/<id>')
+def is_broken(seed, id):
+    t = Hex.query.filter_by(id=id, world_seed=seed).first()
     if t is None:
         abort(404)
     if t.broken is None:
-        t.broken = time.time()
+        t.broken = (datetime.now() - timedelta(seconds=60)).timestamp()
         db.session.commit()
     if datetime.now() - datetime.utcfromtimestamp(t.broken) > timedelta(seconds=60):
         return jsonify(True)
@@ -43,19 +44,19 @@ def is_broken(id):
         return jsonify(False)
 
 
-@bp.route('/user/<username>/set_position/<id>')
-def set_position(id):
+@bp.route('/user/<username>/set_position/<position>')
+def set_position(username, position):
     user = User.query.filter_by(username=username).first()
     if user is None:
         abort(404)
-    user.save_point = id
+    user.position = position
     db.session.commit()
     return '', 200
 
 
-@bp.route('/World/create/<id>')
+@bp.route('/world/<seed>/create/<id>')
 def create_hex(id):
-    t = Hex.query.filter_by(id=id).first()
+    t = Hex.query.filter_by(position=id, world_seed=seed).first()
     if t is not None:
         abort(404)
     t = Hex(broken=datetime.now().timestamp())
