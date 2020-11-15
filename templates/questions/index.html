@@ -24,6 +24,7 @@
             {% for list in lists %}
             <a class="list-group-item list-group-item-active" href="{{ url_for('questions.view_list', list_id=list.id)}}">{{ list.title }}</a>
             {% endfor %}
+            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_list')}}">Create new list</a>
         </ul>
     </div>
   </div>
