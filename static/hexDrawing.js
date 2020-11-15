@@ -1,4 +1,4 @@
-// hi Faiz
+// sorry Faiz
 var windowWidth = $(window).width() - 20,
     windowHeight = $(window).height() - 20,
     radius = 80;
@@ -9,15 +9,12 @@ var svg = d3.select("body").append("svg")
 
 var playerPos = 4206;
 var centerHex = playerPos;
-var world = 0;
 
 console.log("Playerpos", playerPos, "centerHex", centerHex);
 var questionActive = false;
 
 
 let question_data = []; // array of questions
-
-let obstacles = []; // list containing all obstacles
 
 $.ajax({
     type : 'GET',
@@ -62,25 +59,7 @@ function getQuestionLists(){
       });
 }
 
-function getObstacles(world){
-    $.ajax({
-        type : 'GET',
-        url : "/interface/initialise/"+world,
-        contentType: 'application/json;',
-        success: function(data){
-            question_data = data;
-            console.log(data);
-        },
-        failure: function(){
-            console.log("Something went wrong!");
-        }
-      });
-}
-
-async function draw() {
-    var Drawbstacles = await getObstacles(world);
-    console.log("Drawbstacles");
-    console.log(Drawbstacles);
+function draw() {
     svg.append("g")
         .attr("class", "hexagon")
         .selectAll("path")
@@ -112,9 +91,7 @@ async function draw() {
         })
         .attr("class", function (d) {
             var cls = d === playerPos ? "player " : "";
-            // console.log(d, obstacles.includes(d));
-            console.log("obstacles", obstacles);
-            cls += obstacles.includes(d) ? "obstacle" : "fill";
+            cls += Math.random() > 0.5 ? "fill" : "obstacle";
             // console.log(d, cls);
             return cls;
         })
@@ -221,7 +198,7 @@ function movePlayer(newPos) {
         $('#answer').keypress(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
-                correct = verifyAnswer(); 
+                correct = verifyAnswer();
                 if (correct){
                     oldTile.removeClass("player");
                     newTile.addClass("player ");
@@ -230,7 +207,7 @@ function movePlayer(newPos) {
                 }
             }
         });
-    
+
     }
     else{
         oldTile.removeClass("player");
@@ -240,7 +217,7 @@ function movePlayer(newPos) {
 }
 
 function updatePos(){
-    
+
 }
 
 function posFromNo(n, centerHex) {
@@ -347,7 +324,7 @@ function verifyAnswer(){
 }
 
 $("#run").on('click', function(){
-    
+
     $(".question").hide();
     questionActive = false;
 
