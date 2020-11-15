@@ -1,22 +1,14 @@
-from flask import Blueprint, current_app, abort, request, jsonify
-from functools import wraps
-from app.db import User
-from app.db import Hex, db
+from flask import Blueprint, render_template
 from app.db import QuestionList
-from datetime import datetime, timedelta
-import numpy 
 
-bp = Blueprint('question', __name__)
 
-def validate_request(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        data = request.headers.get('handshake')
-        if not data == current_app.config['SECRET']:
-            abort(401)
-        return f(*args, **kwargs)
+bp = Blueprint('questions', __name__)
 
-    return decorated_function
+
+@bp.route('/test')
+def dummy_route():
+    return jsonify([{'question': 'Why did the chicken cross the road?', 'answer': 'boffa'}])
+
 
 @bp.route('/')
 def status():
