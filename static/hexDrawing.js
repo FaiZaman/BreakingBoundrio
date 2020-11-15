@@ -2,7 +2,7 @@
 $(document).ready(function(){
 
     var windowWidth = $(window).width(),
-        windowHeight = $(window).height(),
+        windowHeight = $(window).height() - $('#navbar').height() - parseInt($('#navbar').css('padding-top')) - parseInt($('#navbar').css('padding-bottom')),
         radius = 80;
 
     var svg = d3.select("body").append("svg")

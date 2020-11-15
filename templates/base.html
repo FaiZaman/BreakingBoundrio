@@ -16,6 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" />
+    {% block styles %}{% endblock %}
     <title>breakingboundr.io</title>
   </head>
 
@@ -44,7 +45,6 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
-  <!--<script src="{{ url_for('static', filename='basicIO.js') }}"></script>-->
-<!--above: test for basic RESTful IO-->
+    {% block scripts %}{% endblock %}
   </body>
 </html>

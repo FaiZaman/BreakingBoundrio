@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
   <button
     class="navbar-toggler"
     type="button"
@@ -28,5 +28,6 @@
         <a class="nav-link" href="{{ url_for('main.contribution') }}">Contributors {% if current == 'contribution' %}<span class="sr-only">(current)</span>{% endif %}</a>
       </li>
     </ul>
+    <button class="btn {% if current == 'game' %} btn-dark {% else %} btn-light {% endif %} ml-auto" onclick="window.location.replace('{{url_for('main.game')}}')">Play the game!</button>
   </div>
 </nav>
