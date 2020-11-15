@@ -241,7 +241,6 @@ function movePlayer(newPos) {
     }
 }
 
-
 function posFromNo(n, centerHex) {
     // there are 100 rows of 100 hexes each
     var centerX = windowWidth / 2;
@@ -281,7 +280,7 @@ function neighborhood(centerHex) {
     return neighbors;
 }
 
-var maths = [
+var flavourText = [
     "A mammoth with an equals sign on its forehead comes tumbling down a mountain! It roars, and\
     you translate from Mammothish quickly:",
     "A tall Viking brandishing a protractor emerges from the valley below!\
@@ -290,14 +289,30 @@ var maths = [
     "A giantic man, holding an equally gigantic ruler, lumbers towards you! He groans deeply:",
     "A swarm of wasps buzzes angrily in the shape of a minus sign! They morph into the form:",
     "A trio of mathematical moles emerges from the ground below you! They pop up in the form of\
-    Morse code and you attempt to understand their frustrations:"
+    Morse code and you attempt to understand their frustrations:",
+    "A troll wearing a historian's coat appears from behind a wall! He shouts at you:",
+    "The Loch Ness Monster, wearing Cleopatra's necklace, impossibly spashes up from a tiny puddle!\
+    It wails loudly:",
+    "Medusa slithers up to you carrying a large history book! You glance away from her face just\
+    as she utters:",
+    "Aristotle himself rises from his grave! Upon seeing you, he growls and mutters:",
+    "Rats bearing the Black Death scurry towards you! They squeak highly:",
+    "Poseidon swallows the beach you stand on with tremendous waves of the ocean! Deeply, he asks:",
+    "Einstein traipses over using the theory of relativity! He smiles knowingly and asks:",
+    "Stephen Hawking rides up to you in his super fast wheelchair! His voice generator spits out:",
+    "Marie Curie, befuddled with radiation poisoning, tramples over in a daze! She questions\
+    you unhappily:",
+    "Rosiland Franklin rolls down a hill and comes to a stop before you! She gets up and\
+    begs of you:",
+    "Isaac Newton comes barging around a tree throwing apples at you! He yelps simultaneously:",
+    "Erwin Schrödinger strolls along, deep in thought! He utters one of his thoughts out loud:"
 ];
 
 function popupQuestion(tile) {
     // if this is a red hexagon, bring up notification that asks a question
     // TODO: this only runs when the player walks into this wall
     const tileType = tile.attr("class");
-    const random_filler = maths[Math.floor(Math.random() * maths.length)];
+    const random_filler = flavourText[Math.floor(Math.random() * flavourText.length)];
     const random_question_data = question_data[Math.floor(Math.random() * question_data.length)];
 
     const question = random_question_data['question'];
