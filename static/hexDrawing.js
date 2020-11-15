@@ -11,6 +11,51 @@ var centerHex = playerPos;
 
 console.log("Playerpos", playerPos, "centerHex", centerHex);
 
+let question_data = []; // array of questions
+
+$.ajax({
+    type : 'GET',
+    url : "/questions/test",
+    contentType: 'application/json;',
+    success: function(data){
+        question_data = data;
+        console.log(data);
+    },
+    failure: function(){
+        console.log("Something went wrong!");
+    }
+});
+
+function getQuestionsList(id){
+    $.ajax({
+        type : 'GET',
+        url : "/interface/questions/get_list/" + id,
+        contentType: 'application/json;',
+        success: function(data){
+            question_data = data;
+            console.log(data);
+        },
+        failure: function(){
+            console.log("Something went wrong!");
+        }
+      });
+}
+
+function getQuestionLists(){
+    $.ajax({
+        type : 'GET',
+        url : "/interface/questions/get_lists",
+        contentType: 'application/json;',
+        success: function(data){
+            question_data = data;
+            console.log(data);
+        },
+        failure: function(){
+            console.log("Something went wrong!");
+        }
+      });
+}
+
 function draw() {
     svg.append("g")
         .attr("class", "hexagon")
@@ -173,3 +218,78 @@ function neighborhood(centerHex) {
 }
 
 movePlayer(502);
+
+
+var maths = [
+    "A mammoth with an equals sign on its forehead comes tumbling down a mountain! It roars, and\
+    you translate from Mammothish quickly:",
+    "A tall Viking brandishing a protractor emerges from the valley below!\
+    He bellows in his Nordic tongue:",
+    "Pirates searching for their compass attack from behind a bush! They scream unintelligibly:",
+    "A giantic man, holding an equally gigantic ruler, lumbers towards you! He groans deeply:",
+    "A swarm of wasps buzzes angrily in the shape of a minus sign! They morph into the form:",
+    "A trio of mathematical moles emerges from the ground below you! They pop up in the form of\
+    Morse code and you attempt to understand their frustrations:"
+];
+
+$("path").on('click', function(){
+
+    // if this is a red hexagon, bring up notification that asks a question
+    // TODO: this only runs when the player walks into this wall
+    const filled = $(this).attr("class");
+    const random_filler = maths[Math.floor(Math.random() * maths.length)];
+    const random_question_data = question_data[Math.floor(Math.random() * question_data.length)];
+
+    const question = random_question_data['question'];
+
+    if (filled){
+        $(".question").show();
+        $(".modal-title").text(random_filler);
+        $(".question-text").text(question);
+    }
+    else {
+        alert("not filled");
+    }
+});
+
+$("#submit-answer").on('click', function(){
+    verifyAnswer();
+});
+
+$('#answer').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+        verifyAnswer(); 
+    }
+});
+
+function verifyAnswer(){
+    const question = $(".question-text").text();
+    const userAnswer = $("#answer").val();
+
+    let realAnswer = question_data.find(data_item => data_item.question == question);
+    realAnswer = realAnswer['answer'];
+
+    // TODO: verify answer is correct, either from database or clientside
+    if (userAnswer == ""){
+        $(".error").show();
+    }
+    else {
+        if (userAnswer == realAnswer){
+            alert("You were right!");
+        }
+        else{
+            alert("You were wrong!");
+        }
+        $(".question").hide();
+        $(".error").hide();
+    }
+}
+
+$("#run").on('click', function(){
+    
+    $(".question").hide();
+
+    // what to do when running away?
+
+});
