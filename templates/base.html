@@ -10,19 +10,24 @@
       integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
       crossorigin="anonymous"
     />
+    <link rel="icon" href="{{ url_for('static', filename='images/logoForPage.png')}}"/>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Goldman&display=swap" rel="stylesheet">  
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='main.css')}}" />
-    <title>BreakingBoundr.io</title>
+    <title>breakingboundr.io</title>
   </head>
 
   <body>
 {% block nav %}{% endblock %}
 {% block content %}{% endblock %}
     <footer class="white">
-      <a href="https://www.durhack.com">DurHack 2020</a> - Team BreakingBoundrio
+      <div class="copyright py-4 text-center text-white" style="background-color: #0c0916">
+        <div class="container">
+          <a href="https://www.durhack.com">DurHack 2020</a> - Team BreakingBoundrio
+        </div>
+      </div>
     </footer>
     <script
       src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

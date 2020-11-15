@@ -11,45 +11,43 @@
   <div>
     <img class='smallLogo' alt='logo' src="{{ url_for('static', filename='images/logoForPage.png')}}">
   </div>
-  <h1>RULES</h1>
-  <h2 class='white'>
-    - Hints and tips on how to play - 
-  </h2>
+  <h1>HOW TO PLAY</h1>
 </header>
 <main>
-  <div class="card-group">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title titlecard largeFont">CONTROLS</h5>
-        <div>
-          <img class='imagesizing' alt='wasd' src="{{ url_for('static', filename='images/wasd.jpg')}}">
+  <body>
+    <div class="card-group">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title titlecard largeFont centered">CONTROLS</h5>
+          <div>
+            <img class='imagesizing centered' alt='ctrls' src="{{ url_for('static', filename='images/controls.png')}}">
+          </div>
+          <p class="card-text centered">
+            The keys shown above link to the directions you will travel along the board.
+          </p>
         </div>
-        <p class="card-text">
-          <small class="text-muted">If you don't know how to use WASD... Google it!</small>
-        </p>
+      </div>
+      <div class="card lbbg">
+        <div class="card-body">
+          <h5 class="card-title titlecard largeFont centered">INSTRUCTIONS</h5>
+          <p class="card-text centered">
+            <ol class='list-group list-group-flush medFont'>
+              <li class="list-group-item">1) Land on a hexagon.</li>
+              <li class="list-group-item">2) A question will appear - answer it!</li>
+              <li class="list-group-item">3) Move to the next hexagon.</li>
+              <li class="list-group-item">4) Score highly by answering more questions correctly.</li>
+            </ol>
+          </p>
+        </div>
       </div>
     </div>
-    <div class="card lbbg">
-      <div class="card-body">
-        <h5 class="card-title titlecard largeFont">BREAK THE BOUNDARIES</h5>
-        <p class="card-text">
-          Travel around the board, landing on hexagons. Answer as many questions as you can to get a high score!
-        </p>
-        <p class="card-text">
-          <small class="text-muted">Details here</small>
-        </p>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title titlecard largeFont">WHAT WILL I LEARN?</h5>
-        <p class="card-text">
-          Practice your mathematics skills, compete with others to get the best score you can.
-        </p>
-        <p class="card-text">
-          <small class="text-muted">Details here</small>
-        </p>
-      </div>
+  </body>
+  <div class="card card-grouptext-center centered dbbg">
+    <div class="card-body white">
+      <p id='italicsFont'>
+        Are you ready to break boundaries?
+      </p>
+      <a href="game.html" class="btn btn-light btn-lg">Play Now</a>
     </div>
   </div>
 </main>

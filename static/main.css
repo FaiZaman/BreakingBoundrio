@@ -44,6 +44,7 @@ p {
 
 .title {
   font-family: 'Goldman', cursive;
+  font-size: 5rem;
 }
 
 .titlecard {
@@ -100,6 +101,10 @@ p {
   background-color: #d5d5e9;
 }
 
+.dbbg {
+  background-color: #221552;
+}
+
 .imagesizing {
   width: 300px;
   height: auto;
@@ -117,9 +122,18 @@ a {
   color: #d5d5e9;
 }
 
-.largeFont{
-  font-size: 2rem;
+.largestFont{
+  font-size: 3rem;
   font-weight: bold;
+}
+
+.largeFont{
+  font-size: 2.2rem;
+  font-weight: bold;
+}
+
+.medFont {
+  font-size: 1.5rem;
 }
 
 #descriptionPara {
@@ -134,3 +148,11 @@ a {
   margin-left: 80px;
 }
 
+.headFootBg {
+  background-color: 0c0916;
+}
+
+#italicsFont {
+  font-style: italic;
+  font-size: 1.2rem;
+}
