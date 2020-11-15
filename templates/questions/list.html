@@ -28,5 +28,16 @@
         </ul>
     </div>
   </div>
+  <div class="card text-center lbbg">
+    <div class="card-body">
+      <h5 class="card-title largeFont">{{ list.title }}: Flavour Text</h5>
+        <ul class="list-group list-group-flush">
+            {% for ftext in list.flavour_text %}
+            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.edit_flavour_text', list_id=list.id, flavour_text_id=ftext.id)}}">{{ ftext.text }}</a>
+            {% endfor %}
+            <a class="list-group-item list-group-item-active" href="{{ url_for('questions.create_flavour_text', list_id=list.id)}}">Add flavour text</a>
+        </ul>
+    </div>
+  </div>
 </main>
 {% endblock %}
