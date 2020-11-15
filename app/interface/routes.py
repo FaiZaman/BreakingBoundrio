@@ -106,6 +106,18 @@ def get_question_list(id):
         questions.append({'question': question.question, 'answer': question.answer})
     return jsonify(questions)
 
+
+@bp.route('/questions/get_flavour_text/<id>')
+def get_flavour_text_list(id):
+    qlist = QuestionList.query.filter_by(id=id).first()
+    if qlist is None:
+        abort(404)
+    flavour_texts = []
+    for flavour_text in qlist.flavour_text:
+        flavour_texts.append({'flavour_text': flavour_text.text, 'category': flavour_text.category})
+    return jsonify(flavour_texts)
+
+
 # cheese routes are for testing basic RESTful IO
 @bp.route('/new_cheese', methods=['POST'])
 def new_cheese():
