@@ -9,10 +9,13 @@ var svg = d3.select("body").append("svg")
 
 var playerPos = 4206;
 var centerHex = playerPos;
+var world = 0;
 
 console.log("Playerpos", playerPos, "centerHex", centerHex);
 
 let question_data = []; // array of questions
+
+let obstacles = []; // list containing all obstacles
 
 $.ajax({
     type : 'GET',
@@ -57,7 +60,25 @@ function getQuestionLists(){
       });
 }
 
-function draw() {
+function getObstacles(world){
+    $.ajax({
+        type : 'GET',
+        url : "/interface/initialise/"+world,
+        contentType: 'application/json;',
+        success: function(data){
+            question_data = data;
+            console.log(data);
+        },
+        failure: function(){
+            console.log("Something went wrong!");
+        }
+      });
+}
+
+async function draw() {
+    var Drawbstacles = await getObstacles(world);
+    console.log("Drawbstacles");
+    console.log(Drawbstacles);
     svg.append("g")
         .attr("class", "hexagon")
         .selectAll("path")
@@ -89,7 +110,9 @@ function draw() {
         })
         .attr("class", function (d) {
             var cls = d === playerPos ? "player " : "";
-            cls += Math.random() > 0.5 ? "fill" : "obstacle";
+            // console.log(d, obstacles.includes(d));
+            console.log("obstacles", obstacles);
+            cls += obstacles.includes(d) ? "obstacle" : "fill";
             // console.log(d, cls);
             return cls;
         })
