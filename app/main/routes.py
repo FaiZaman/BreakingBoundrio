@@ -12,9 +12,9 @@ def index():
 def rules():
     return render_template('rules.html')
 
-@bp.route('/game')
-def game():
-    return render_template('game.html')
+@bp.route('/test_game')     # change to game.html later
+def test_game():
+    return render_template('test_game.html')
 
 @bp.route('/contribution')
 def contribution():
