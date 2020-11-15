@@ -132,11 +132,11 @@ function onclick(d) {
 window.addEventListener("keydown", onKeyDown, false);
 
 function onKeyDown(event) {
-    console.log("Key pressed! ", event.key);
+    // console.log("Key pressed! ", event.key);
     if (!questionActive) {
         var pY = playerPos % 100;
         var pX = Math.floor(playerPos / 100);
-        console.log("from pX, pY", pX, pY);
+        // console.log("from pX, pY", pX, pY);
         switch (event.key) {
             case "w" : // up left
                 if (pX % 2) {
@@ -196,27 +196,29 @@ function movePlayer(newPos) {
     console.log("Moving player from", playerPos, "to", newPos);
     var oldTile = $("#" + playerPos);
     var newTile = $("#" + newPos);
+    var prevPos = playerPos;
     questionActive = popupQuestion(newTile);
     var answer = null;
     var correct = null;
     if (questionActive) {
         $("#submit-answer").on('click', function () {
             correct = verifyAnswer();
-            if (correct) {
+            if (correct && prevPos === playerPos) {
                 oldTile.removeClass("player");
                 newTile.addClass("player ");
+                console.log("Verified answer - moving from ", playerPos, " to ", newPos);
                 playerPos = newPos;
-                console.log("moving")
             }
         });
 
         $('#answer').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode == '13') {
+            if (keycode === '13') {
                 correct = verifyAnswer();
                 if (correct) {
                     oldTile.removeClass("player");
                     newTile.addClass("player ");
+                    console.log("Keypress verified answer - moving from ", playerPos, " to ", newPos);
                     playerPos = newPos;
                     console.log("moving")
                 }
@@ -227,13 +229,13 @@ function movePlayer(newPos) {
     else {
         oldTile.removeClass("player");
         newTile.addClass("player ");
+        console.log("3rd case - moving from ", playerPos, " to ", newPos);
         playerPos = newPos;
     }
-    var y_diff = (newPos % 100) - (centerHex % 100)
-        + 0.5; // vertical offset, in hexes (equ. radii)
+    var y_diff = (newPos % 100) - (centerHex % 100) + 0.5; // vertical offset, in hexes (equ. radii)
     var x_diff = Math.floor(newPos / 100) - Math.floor(centerHex / 100); // horizontal offset, (number of rows)
-    console.log("diff", x_diff,y_diff);
-    if (Math.abs(y_diff) > windowHeight/radius/4 || Math.abs(x_diff)>windowWidth/radius/4){
+    // console.log("diff", x_diff, y_diff);
+    if (Math.abs(y_diff) > windowHeight / radius / 4 || Math.abs(x_diff) > windowWidth / radius / 4) {
         console.log("Recenter...");
         centerHex = newPos;
         $("g").remove();
@@ -317,13 +319,13 @@ function popupQuestion(tile) {
 
     const question = random_question_data['question'];
 
-    if (tileType == "obstacle") {
+    if (tileType === "obstacle") {
         $(".question").show();
         $(".modal-title").text(random_filler);
         $(".question-text").text(question);
         return true;
     }
-    else if (tileType == "fill") {
+    else if (tileType === "fill") {
         return false;
     }
     else {
@@ -335,11 +337,11 @@ function verifyAnswer() {
     const question = $(".question-text").text();
     const userAnswer = $("#answer").val();
 
-    let realAnswer = question_data.find(data_item => data_item.question == question);
+    let realAnswer = question_data.find(data_item => data_item.question === question);
     realAnswer = realAnswer['answer'];
 
     // TODO: verify answer is correct, either from database or clientside
-    if (userAnswer == "") {
+    if (userAnswer === "") {
         $(".error").show();
     }
     else {
@@ -348,7 +350,7 @@ function verifyAnswer() {
         $(".error").hide();
         questionActive = false;
 
-        if (userAnswer == realAnswer) {
+        if (userAnswer === realAnswer) {
             console.log("You were right!");
             return true;
         }
