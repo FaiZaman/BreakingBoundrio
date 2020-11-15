@@ -160,3 +160,7 @@ a {
 #fontMain {
   font-family: 'Titillium Web', sans-serif;
 }
+
+.card a {
+  color: blue;
+}

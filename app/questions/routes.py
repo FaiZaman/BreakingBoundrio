@@ -45,16 +45,17 @@ def delete_list(list_id):
 
 @bp.route('/list/<list_id>/create_question', methods=['GET', 'POST'])
 def create_question(list_id):
+    qlist = QuestionList.query.filter_by(id=list_id).first()
     form = CreateQuestionForm(request.form)
     if form.validate_on_submit():
         question = Question()
         question.question = form.question.data
         question.answer = form.answer.data
-        question.list = QuestionList.query.filter_by(id=list_id).first()
+        question.list = qlist
         db.session.add(question)
         db.session.commit()
         return redirect(url_for('questions.view_list', list_id=list_id))
-    return render_template('questions/create_question.html', form=form)
+    return render_template('questions/create_question.html', form=form, list=qlist)
 
 
 @bp.route('/list/<list_id>/edit_question/<question_id>', methods=['GET', 'POST'])
@@ -90,16 +91,17 @@ def delete_question(list_id, question_id):
 
 @bp.route('/list/<list_id>/create_flavour_text', methods=['GET', 'POST'])
 def create_flavour_text(list_id):
+    qlist = QuestionList.query.filter_by(id=list_id).first()
     form = CreateFlavourTextForm(request.form)
     if form.validate_on_submit():
         flavour_text = FlavourText()
         flavour_text.text = form.text.data
         flavour_text.category = form.category.data
-        flavour_text.list = QuestionList.query.filter_by(id=list_id).first()
+        flavour_text.list = qlist
         db.session.add(flavour_text)
         db.session.commit()
         return redirect(url_for('questions.view_list', list_id=list_id))
-    return render_template('questions/create_flavour_text.html', form=form)
+    return render_template('questions/create_flavour_text.html', form=form, list=qlist)
 
 
 @bp.route('/list/<list_id>/edit_flavour_text/<flavour_text_id>', methods=['GET', 'POST'])

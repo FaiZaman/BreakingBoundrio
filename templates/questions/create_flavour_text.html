@@ -19,16 +19,19 @@
 </header>
 <main>
   <div class='card gapsBetween lbbg'>
-      <form class="formStyle" action="" method="post" novalidate>
-          {{ form.hidden_tag() }}
-          <dl class="form-group">
-              {{ render_field(form.text, class='form-control titlecard', placeholder='Flavour Text') }}
-              {{ render_field(form.category, class='form-control titlecard', placeholder='Category') }}
-          </dl>
-          <dl>
-              {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
-          </dl>
-      </form>
-    </div>
+    <form class="formStyle" action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <dl class="form-group">
+            {{ render_field(form.text, class='form-control titlecard', placeholder='Flavour Text') }}
+            {{ render_field(form.category, class='form-control titlecard', placeholder='Category') }}
+        </dl>
+        <dl>
+            {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+          <div class="text-center">
+            <a href="{{ url_for('questions.view_list', list_id=list.id) }}">Cancel</a>
+          </div>
+        </dl>
+    </form>
+  </div>
 </main>
 {% endblock %}
