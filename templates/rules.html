@@ -8,13 +8,20 @@
 
 {% block content %}
 <header class="title">
-  <div>
-    <img class='smallLogo' alt='logo' src="{{ url_for('static', filename='images/logoForPage.png')}}">
+  <div class="container-flex">
+    <div class="row">
+      <div class="col-6 offset-3 col-sm-2 offset-sm-5">
+        <img class='smallLogo w-100' alt='logo' src="{{ url_for('static', filename='images/logoForPage.png')}}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-8 offset-2">
+        <h1>HOW TO PLAY</h1>
+      </div>
+    </div>
   </div>
-  <h1>HOW TO PLAY</h1>
 </header>
 <main>
-  <body>
     <div class="card-group">
       <div class="card">
         <div class="card-body">
@@ -41,8 +48,7 @@
         </div>
       </div>
     </div>
-  </body>
-  <div class="card card-grouptext-center centered dbbg">
+  <div class="card card-group text-center centered dbbg">
     <div class="card-body white">
       <p id='italicsFont'>
         Want to add your own questions to the game?
