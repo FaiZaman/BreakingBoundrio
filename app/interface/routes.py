@@ -72,11 +72,11 @@ def create_world(seed):
     if world is None:
         world = World(seed=seed)
     hexes = world.hexes.all()
-    if len(hexes) != 100:
+    if len(hexes) != 1000:
     	numpy.random.seed(seed=seed)
     	dummy_list = []
-    	for i in range(100):
-    		position = numpy.random.randint(0,1000)
+    	for i in range(1000):
+    		position = numpy.random.randint(0,10000)
     		if position not in dummy_list:
     			h = Hex(position=i,broken=(datetime.now()-timedelta(seconds=60)).timestamp(), world=world)
     			dummy_list.append(position)
