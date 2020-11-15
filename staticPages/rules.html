@@ -14,31 +14,40 @@
   <h1>HOW TO PLAY</h1>
 </header>
 <main>
-  <div class="card-group">
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title titlecard largeFont centered">CONTROLS</h5>
-        <div>
-          <img class='imagesizing centered' alt='ctrls' src="{{ url_for('static', filename='images/controls.png')}}">
+  <body>
+    <div class="card-group">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title titlecard largeFont centered">CONTROLS</h5>
+          <div>
+            <img class='imagesizing centered' alt='ctrls' src="{{ url_for('static', filename='images/controls.png')}}">
+          </div>
+          <p class="card-text centered">
+            The keys shown above link to the directions you will travel along the board.
+          </p>
         </div>
-        <p class="card-text centered">
-          The keys shown above link to the directions you will travel along the board.
-        </p>
+      </div>
+      <div class="card lbbg">
+        <div class="card-body">
+          <h5 class="card-title titlecard largeFont centered">INSTRUCTIONS</h5>
+          <p class="card-text centered">
+            <ol class='list-group list-group-flush medFont'>
+              <li class="list-group-item">1) Land on a hexagon.</li>
+              <li class="list-group-item">2) A question will appear - answer it!</li>
+              <li class="list-group-item">3) Move to the next hexagon.</li>
+              <li class="list-group-item">4) Score highly by answering more questions correctly.</li>
+            </ol>
+          </p>
+        </div>
       </div>
     </div>
-    <div class="card lbbg">
-      <div class="card-body">
-        <h5 class="card-title titlecard largeFont centered">INSTRUCTIONS</h5>
-        <p class="card-text centered">
-          <ol class='medFont'>
-            <li>Land on a hexagon.</li>
-            <li>A question will appear - answer it!</li>
-            <li>Move to the next hexagon.</li>
-            <li>Score highly by answering more questions correctly.</li>
-          </ol>
-        </p>
-      </div>
-    </div>
+  </body>
+  <div class="card card-grouptext-center centered dbbg">
+    <div class="card-body white">
+      <p id='italicsFont'>
+        Are you ready to break boundaries?
+      </p>
+      <a href="game.html" class="btn btn-light btn-lg">Play Now</a>
     </div>
   </div>
 </main>

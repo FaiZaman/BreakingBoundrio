@@ -44,6 +44,7 @@ p {
 
 .title {
   font-family: 'Goldman', cursive;
+  font-size: 5rem;
 }
 
 .titlecard {
@@ -98,6 +99,10 @@ p {
 
 .lbbg {
   background-color: #d5d5e9;
+}
+
+.dbbg {
+  background-color: #221552;
 }
 
 .imagesizing {
