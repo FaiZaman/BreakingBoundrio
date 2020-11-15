@@ -19,63 +19,62 @@ var world = 0;
 let question_data = []; // array of questions
 
 $.ajax({
-    type : 'GET',
-    url : "/questions/test",
+    type: 'GET',
+    url: "/questions/test",
     contentType: 'application/json;',
-    success: function(data){
+    success: function (data) {
         question_data = data;
         console.log(data);
     },
-    failure: function(){
+    failure: function () {
         console.log("Something went wrong!");
     }
 });
 
 $.ajax({
-        type : 'GET',
-        url : "/interface/initialise/"+world,
-        contentType: 'application/json;',
-        success: function(data){
-            obstacles = data;
-            console.log(data);
-            draw();
-        },
-        failure: function(){
-            console.log("Something went wrong!");
-        }
+    type: 'GET',
+    url: "/interface/initialise/" + world,
+    contentType: 'application/json;',
+    success: function (data) {
+        obstacles = data;
+        console.log(data);
+        $("#loading").hide();
+        draw();
+    },
+    failure: function () {
+        console.log("Something went wrong!");
+    }
 });
 
 
-
-
-function getQuestionsList(id){
+function getQuestionsList(id) {
     $.ajax({
-        type : 'GET',
-        url : "/interface/questions/get_list/" + id,
+        type: 'GET',
+        url: "/interface/questions/get_list/" + id,
         contentType: 'application/json;',
-        success: function(data){
+        success: function (data) {
             question_data = data;
             console.log(data);
         },
-        failure: function(){
+        failure: function () {
             console.log("Something went wrong!");
         }
-      });
+    });
 }
 
-function getQuestionLists(){
+function getQuestionLists() {
     $.ajax({
-        type : 'GET',
-        url : "/interface/questions/get_lists",
+        type: 'GET',
+        url: "/interface/questions/get_lists",
         contentType: 'application/json;',
-        success: function(data){
+        success: function (data) {
             question_data = data;
             console.log(data);
         },
-        failure: function(){
+        failure: function () {
             console.log("Something went wrong!");
         }
-      });
+    });
 }
 
 function draw() {
@@ -134,7 +133,7 @@ window.addEventListener("keydown", onKeyDown, false);
 
 function onKeyDown(event) {
     console.log("Key pressed! ", event.key);
-    if (!questionActive){
+    if (!questionActive) {
         var pY = playerPos % 100;
         var pX = Math.floor(playerPos / 100);
         console.log("from pX, pY", pX, pY);
@@ -201,10 +200,10 @@ function movePlayer(newPos) {
     var answer = null;
     var correct = null;
 
-    if (questionActive){
-        $("#submit-answer").on('click', function(){
+    if (questionActive) {
+        $("#submit-answer").on('click', function () {
             correct = verifyAnswer();
-            if (correct){
+            if (correct) {
                 oldTile.removeClass("player");
                 newTile.addClass("player ");
                 playerPos = newPos;
@@ -212,11 +211,11 @@ function movePlayer(newPos) {
             }
         });
 
-        $('#answer').keypress(function(event){
+        $('#answer').keypress(function (event) {
             var keycode = (event.keyCode ? event.keyCode : event.which);
-            if(keycode == '13'){
+            if (keycode == '13') {
                 correct = verifyAnswer();
-                if (correct){
+                if (correct) {
                     oldTile.removeClass("player");
                     newTile.addClass("player ");
                     playerPos = newPos;
@@ -226,16 +225,13 @@ function movePlayer(newPos) {
         });
 
     }
-    else{
+    else {
         oldTile.removeClass("player");
         newTile.addClass("player ");
         playerPos = newPos;
     }
 }
 
-function updatePos(){
-
-}
 
 function posFromNo(n, centerHex) {
     // there are 100 rows of 100 hexes each
@@ -243,7 +239,7 @@ function posFromNo(n, centerHex) {
     var centerY = windowHeight / 2;
     var h = Math.sqrt(3) / 2 * radius;
     var y_diff = (n % 100) - (centerHex % 100)
-    + 0.5; // vertical offset, in hexes (equ. radii)
+        + 0.5; // vertical offset, in hexes (equ. radii)
     var x_diff = Math.floor(n / 100) - Math.floor(centerHex / 100); // horizontal offset, (number of rows)
     if (Math.abs(x_diff) > 50) x_diff = x_diff > 0 ? x_diff - 100 : x_diff + 100;     //torus - loop y
     if (Math.abs(y_diff) > 50) y_diff = y_diff > 0 ? y_diff - 100 : y_diff + 100;     //torus - loop x
@@ -260,7 +256,7 @@ function neighborhood(centerHex) {
     // number of hexes which will be on the screen to the left of the center hex
     var hexesAbove = Math.ceil(windowHeight / (3 * radius));
     // number of hexes appearing above the center hex (=number of hexes below) on the screen
-    var  hexesAside = Math.ceil(windowWidth / (Math.sqrt(3) * radius) + 1);
+    var hexesAside = Math.ceil(windowWidth / (Math.sqrt(3) * radius) + 1);
     // hexesAside = Math.ceil(hexesAside / 2); // todo: remove - here for debugging view
     // hexesAbove = Math.ceil(hexesAbove / 2); // todo: remove - here for debugging view
 
@@ -288,7 +284,7 @@ var maths = [
     Morse code and you attempt to understand their frustrations:"
 ];
 
-function popupQuestion(tile){
+function popupQuestion(tile) {
     // if this is a red hexagon, bring up notification that asks a question
     // TODO: this only runs when the player walks into this wall
     const tileType = tile.attr("class");
@@ -297,7 +293,7 @@ function popupQuestion(tile){
 
     const question = random_question_data['question'];
 
-    if (tileType == "obstacle"){
+    if (tileType == "obstacle") {
         $(".question").show();
         $(".modal-title").text(random_filler);
         $(".question-text").text(question);
@@ -311,7 +307,7 @@ function popupQuestion(tile){
     }
 }
 
-function verifyAnswer(){
+function verifyAnswer() {
     const question = $(".question-text").text();
     const userAnswer = $("#answer").val();
 
@@ -319,7 +315,7 @@ function verifyAnswer(){
     realAnswer = realAnswer['answer'];
 
     // TODO: verify answer is correct, either from database or clientside
-    if (userAnswer == ""){
+    if (userAnswer == "") {
         $(".error").show();
     }
     else {
@@ -328,11 +324,11 @@ function verifyAnswer(){
         $(".error").hide();
         questionActive = false;
 
-        if (userAnswer == realAnswer){
+        if (userAnswer == realAnswer) {
             console.log("You were right!");
             return true;
         }
-        else{
+        else {
             console.log("You were wrong!");
             return false;
         }
@@ -340,7 +336,7 @@ function verifyAnswer(){
     }
 }
 
-$("#run").on('click', function(){
+$("#run").on('click', function () {
 
     $(".question").hide();
     questionActive = false;
