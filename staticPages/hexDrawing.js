@@ -6,68 +6,135 @@ var svg = d3.select("body").append("svg")
     .attr("width", windowWidth)
     .attr("height", windowHeight);
 
+var playerPos = 0;
+var centerHex = playerPos;
 
-svg.append("g")
-    .attr("class", "hexagon")
-    .selectAll("path")
-    .data(neighborhood(101))
-    // .data([0, 9901, 1, 101, 9900, 200, 100, 300, 9999, 199])
-    .enter().append("path")
-    .attr("d", function (d) {
-        var center = posFromNo(d, 101);
-        var cX = center.cX;
-        var cY = center.cY;
-        var h = Math.sqrt(3) / 2 * radius;
-        var w = Math.sqrt(3) / 2 * radius;
-        var r = radius;
-        // below: draw a hexagon centered on cX, cY, with side length = radius
-        var p = "M" + (cX + r) + " " + (cY) + " "; // start at (r,0)
-        p += "L" + (cX + r * 0.5) + " " + (cY +  h) + " "; // go to (.5r, h)
-        p += "L" + (cX + r * -0.5) + " " + (cY +  h) + " "; // go to (-.5r, h)
-        p += "L" + (cX - r) + " " + (cY) + " "; // go to (-r, 0)
-        p += "L" + (cX + r * -0.5) + " " + (cY -  h) + " "; // go to (-.5r, -h)
-        p += "L" + (cX + r * 0.5) + " " + (cY -  h) + " "; // go to (.5r, -h)
-        p += "Z";
-        var p2 = "M" + (cX) + " " + (cY + r) + " ";
-        p2 += "L" + (cX + w) + " " + (cY + r/2) + " ";
-        p2 += "L" + (cX + w) + " " + (cY - r/2) + " ";
-        p2 += "L" + (cX) + " " + (cY - r) + " ";
-        p2 += "L" + (cX - w) + " " + (cY - r/2) + " ";
-        p2 += "L" + (cX - w) + " " + (cY + r/2) + " ";
-        p2 += "Z";
-        return p2;
-    })
-    .attr("class", function (d) {
-        return d === 101 ? "fill" : "player";
-    })
-    .attr("id", function (d) {
-        return d;
-    })
-    .attr("stroke-width", 3)
-    .attr("stroke", "black")
-    .on("mousedown", mousedown)
-    .on("mousemove", mousemove)
-    .on("mouseup", mouseup);
+console.log("Playerpos", playerPos, "centerHex", centerHex);
 
-
-var mousing = 0;
-
-function mousedown(d) {
-    mousing = d.fill ? -1 : +1;
-    console.log("mouse down");
-    mousemove.apply(this, arguments);
+function draw() {
+    svg.append("g")
+        .attr("class", "hexagon")
+        .selectAll("path")
+        .data(neighborhood(centerHex))
+        // .data([0, 9901, 1, 101, 9900, 200, 100, 300, 9999, 199])
+        .enter().append("path")
+        .attr("d", function (d) {
+            var center = posFromNo(d, 101);
+            var cX = center.cX;
+            var cY = center.cY;
+            var h = Math.sqrt(3) / 2 * radius;
+            var w = Math.sqrt(3) / 2 * radius;
+            var r = radius;
+            // below: draw a hexagon centered on cX, cY, with side length = radius
+            var p = "M" + (cX + r) + " " + (cY) + " "; // start at (r,0)
+            p += "L" + (cX + r * 0.5) + " " + (cY + h) + " "; // go to (.5r, h)
+            p += "L" + (cX + r * -0.5) + " " + (cY + h) + " "; // go to (-.5r, h)
+            p += "L" + (cX - r) + " " + (cY) + " "; // go to (-r, 0)
+            p += "L" + (cX + r * -0.5) + " " + (cY - h) + " "; // go to (-.5r, -h)
+            p += "L" + (cX + r * 0.5) + " " + (cY - h) + " "; // go to (.5r, -h)
+            p += "Z";
+            var p2 = "M" + (cX) + " " + (cY + r) + " ";
+            p2 += "L" + (cX + w) + " " + (cY + r / 2) + " ";
+            p2 += "L" + (cX + w) + " " + (cY - r / 2) + " ";
+            p2 += "L" + (cX) + " " + (cY - r) + " ";
+            p2 += "L" + (cX - w) + " " + (cY - r / 2) + " ";
+            p2 += "L" + (cX - w) + " " + (cY + r / 2) + " ";
+            p2 += "Z";
+            return p2;
+        })
+        .attr("class", function (d) {
+            var cls = d === playerPos ? "player " : "";
+            cls += Math.random() > 0.5 ? "fill" : "obstacle";
+            // console.log(d, cls);
+            return cls;
+        })
+        .attr("id", function (d) {
+            return d;
+        })
+        .attr("stroke-width", 3)
+        .attr("stroke", "black")
+        .on("click", onclick);
 }
 
-function mousemove(d) {
-    if (mousing) {
-        d3.select(this).classed("fill", d.fill = mousing > 0);
+draw();
+
+function onclick(d) {
+    var tile = $("#" + d);
+    if (d === playerPos) console.log("Player clicked!");
+    else if (tile.hasClass("obstacle")) console.log("Obstacle clicked!");
+    else if (tile.hasClass("fill")) console.log("Grass clicked!");
+    movePlayer(d);
+}
+
+window.addEventListener("keydown", onKeyDown, false);
+
+function onKeyDown(event) {
+    console.log("Key pressed! ", event.key);
+    var pY = playerPos % 100;
+    var pX = Math.floor(playerPos / 100);
+    console.log("from pX, pY", pX, pY);
+    switch (event.key) {
+        case "w" : // up left
+            if (pX % 2) {
+                pX -= 1;
+            }
+            else {
+                pY -= 1;
+                pX -= 1;
+            }
+            break;
+        case "e" : // up right
+            if (pX % 2) {
+                pX += 1;
+            }
+            else {
+                pY -= 1;
+                pX += 1;
+            }
+            break;
+        case "d" : // right
+            pX += 2;
+            break;
+        case "x" : // down right
+            if (pX % 2) {
+                pX += 1;
+                pY += 1;
+            }
+            else {
+                pX += 1;
+            }
+            break;
+        case "y" : // down left (swiss)
+        case "z" : // down left
+            if (pX % 2) {
+                pX -= 1;
+                pY += 1;
+            }
+            else {
+                pX -= 1;
+            }
+            break;
+        case "a" : // left
+            pX -= 2;
+            break;
     }
-    console.log("Mousing: " + mousing);
+    console.log("to pX, pY", pX, pY);
+    pX += 100;
+    pX %= 100;
+    pY += 100;
+    pY %= 100;
+    var newPos = pY + 100 * pX;
+    movePlayer(newPos);
 }
 
-function mouseup() {
-    mousemove.apply(this, arguments);
-    mousing = 0;
+function movePlayer(newPos) {
+    console.log("Moving player from", playerPos, "to", newPos);
+    var oldTile = $("#" + playerPos);
+    var newTile = $("#" + newPos);
+    oldTile.removeClass("player");
+    newTile.addClass("player ");
+    playerPos = newPos;
+
 }
 
 function posFromNo(n, centerHex) {
@@ -79,9 +146,9 @@ function posFromNo(n, centerHex) {
     var x_diff = Math.floor(n / 100) - Math.floor(centerHex / 100); // vertical offset, (number of rows)
     if (Math.abs(x_diff) > 50) x_diff = x_diff > 0 ? x_diff - 100 : x_diff + 100;     //torus - loop y
     if (Math.abs(y_diff) > 50) y_diff = y_diff > 0 ? y_diff - 100 : y_diff + 100;     //torus - loop x
-    var cX = centerX + x_diff* h;
+    var cX = centerX + x_diff * h;
     var cY = centerY + y_diff * radius * 3;
-    cY += (n%200 >= 100) ? 1.5 * radius : 0;
+    cY += (n % 200 >= 100) ? 1.5 * radius : 0;
     // if the target is on the same row as, or a row an even number away from, the center, no adjustment is needed
     // console.log("Coordinates determined for hex number: " + n + " with center hex " + centerHex + ": " + cX + ", " + cY);
     return {cX: cX, cY: cY};
@@ -104,3 +171,5 @@ function neighborhood(centerHex) {
     }
     return neighbors;
 }
+
+movePlayer(502);
