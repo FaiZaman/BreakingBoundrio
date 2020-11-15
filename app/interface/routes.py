@@ -81,7 +81,7 @@ def create_world(seed):
     			dummy_list.append(position)
     			db.session.add(h)
     	db.session.commit()
-	return jsonify(dummy_list), 200
+    return jsonify(dummy_list), 200
 
 
 @bp.route('/questions/get_lists')
