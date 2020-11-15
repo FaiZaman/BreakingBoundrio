@@ -13,7 +13,7 @@ $(document).ready(function(){
             question_data = data;
             console.log(data);
         },
-        failure: function(data){
+        failure: function(){
             console.log("Something went wrong!");
         }
       });
@@ -27,7 +27,7 @@ $(document).ready(function(){
                 question_data = data;
                 console.log(data);
             },
-            failure: function(data){
+            failure: function(){
                 console.log("Something went wrong!");
             }
           });
