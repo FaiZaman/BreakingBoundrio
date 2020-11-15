@@ -144,3 +144,4 @@ cython_debug/
 # Flask-Migrate migrations and database
 migrate/
 app.db
+migrations/

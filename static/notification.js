@@ -11,11 +11,44 @@ $(document).ready(function(){
         contentType: 'application/json;',
         success: function(data){
             question_data = data;
+            console.log(data);
         },
         failure: function(data){
             console.log("Something went wrong!");
         }
       });
+
+    function getQuestionsList(id){
+        $.ajax({
+            type : 'GET',
+            url : "/interface/questions/get_list/" + id,
+            contentType: 'application/json;',
+            success: function(data){
+                question_data = data;
+                console.log(data);
+            },
+            failure: function(data){
+                console.log("Something went wrong!");
+            }
+          });
+    }
+
+    function getQuestionLists(){
+        $.ajax({
+            type : 'GET',
+            url : "/interface/questions/get_lists",
+            contentType: 'application/json;',
+            success: function(data){
+                question_data = data;
+                console.log(data);
+            },
+            failure: function(data){
+                console.log("Something went wrong!");
+            }
+          });
+    }
+
+    //getQuestionLists();
 
     var width = $(window).width() - 20,
     height = $(window).height() - 20,
