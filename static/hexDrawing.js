@@ -11,6 +11,8 @@ var playerPos = 4206;
 var centerHex = playerPos;
 
 console.log("Playerpos", playerPos, "centerHex", centerHex);
+var questionActive = false;
+
 
 let question_data = []; // array of questions
 
@@ -115,71 +117,107 @@ window.addEventListener("keydown", onKeyDown, false);
 
 function onKeyDown(event) {
     console.log("Key pressed! ", event.key);
-    var pY = playerPos % 100;
-    var pX = Math.floor(playerPos / 100);
-    console.log("from pX, pY", pX, pY);
-    switch (event.key) {
-        case "w" : // up left
-            if (pX % 2) {
-                pX -= 1;
-            }
-            else {
-                pY -= 1;
-                pX -= 1;
-            }
-            break;
-        case "e" : // up right
-            if (pX % 2) {
-                pX += 1;
-            }
-            else {
-                pY -= 1;
-                pX += 1;
-            }
-            break;
-        case "d" : // right
-            pX += 2;
-            break;
-        case "x" : // down right
-            if (pX % 2) {
-                pX += 1;
-                pY += 1;
-            }
-            else {
-                pX += 1;
-            }
-            break;
-        case "y" : // down left (swiss)
-        case "z" : // down left
-            if (pX % 2) {
-                pX -= 1;
-                pY += 1;
-            }
-            else {
-                pX -= 1;
-            }
-            break;
-        case "a" : // left
-            pX -= 2;
-            break;
+    if (!questionActive){
+        var pY = playerPos % 100;
+        var pX = Math.floor(playerPos / 100);
+        console.log("from pX, pY", pX, pY);
+        switch (event.key) {
+            case "w" : // up left
+                if (pX % 2) {
+                    pX -= 1;
+                }
+                else {
+                    pY -= 1;
+                    pX -= 1;
+                }
+                break;
+            case "e" : // up right
+                if (pX % 2) {
+                    pX += 1;
+                }
+                else {
+                    pY -= 1;
+                    pX += 1;
+                }
+                break;
+            case "d" : // right
+                pX += 2;
+                break;
+            case "x" : // down right
+                if (pX % 2) {
+                    pX += 1;
+                    pY += 1;
+                }
+                else {
+                    pX += 1;
+                }
+                break;
+            case "y" : // down left (swiss)
+            case "z" : // down left
+                if (pX % 2) {
+                    pX -= 1;
+                    pY += 1;
+                }
+                else {
+                    pX -= 1;
+                }
+                break;
+            case "a" : // left
+                pX -= 2;
+                break;
+        }
+        console.log("to pX, pY", pX, pY);
+        pX += 100;
+        pX %= 100;
+        pY += 100;
+        pY %= 100;
+        var newPos = pY + 100 * pX;
+        movePlayer(newPos);
     }
-    console.log("to pX, pY", pX, pY);
-    pX += 100;
-    pX %= 100;
-    pY += 100;
-    pY %= 100;
-    var newPos = pY + 100 * pX;
-    movePlayer(newPos);
 }
 
 function movePlayer(newPos) {
     console.log("Moving player from", playerPos, "to", newPos);
     var oldTile = $("#" + playerPos);
     var newTile = $("#" + newPos);
-    oldTile.removeClass("player");
-    newTile.addClass("player ");
-    playerPos = newPos;
+    questionActive = popupQuestion(newTile);
+    var answer = null;
+    var correct = null;
 
+    if (questionActive){
+        $("#submit-answer").on('click', function(){
+            correct = verifyAnswer();
+            if (correct){
+                oldTile.removeClass("player");
+                newTile.addClass("player ");
+                playerPos = newPos;
+                console.log("moving")
+            }
+        });
+
+        $('#answer').keypress(function(event){
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode == '13'){
+                correct = verifyAnswer(); 
+                if (correct){
+                    oldTile.removeClass("player");
+                    newTile.addClass("player ");
+                    playerPos = newPos;
+                    console.log("moving")
+                }
+            }
+        });
+    
+    }
+    else{
+        oldTile.removeClass("player");
+        newTile.addClass("player ");
+        playerPos = newPos;
+    }
+}
+
+function updatePos(){
+    
 }
 
 function posFromNo(n, centerHex) {
@@ -233,36 +271,28 @@ var maths = [
     Morse code and you attempt to understand their frustrations:"
 ];
 
-$("path").on('click', function(){
-
+function popupQuestion(tile){
     // if this is a red hexagon, bring up notification that asks a question
     // TODO: this only runs when the player walks into this wall
-    const filled = $(this).attr("class");
+    const tileType = tile.attr("class");
     const random_filler = maths[Math.floor(Math.random() * maths.length)];
     const random_question_data = question_data[Math.floor(Math.random() * question_data.length)];
 
     const question = random_question_data['question'];
 
-    if (filled){
+    if (tileType == "obstacle"){
         $(".question").show();
         $(".modal-title").text(random_filler);
         $(".question-text").text(question);
+        return true;
+    }
+    else if (tileType == "fill") {
+        return false;
     }
     else {
-        alert("not filled");
+        console.log("neither fill nor obstacle");
     }
-});
-
-$("#submit-answer").on('click', function(){
-    verifyAnswer();
-});
-
-$('#answer').keypress(function(event){
-    var keycode = (event.keyCode ? event.keyCode : event.which);
-    if(keycode == '13'){
-        verifyAnswer(); 
-    }
-});
+}
 
 function verifyAnswer(){
     const question = $(".question-text").text();
@@ -276,20 +306,27 @@ function verifyAnswer(){
         $(".error").show();
     }
     else {
-        if (userAnswer == realAnswer){
-            alert("You were right!");
-        }
-        else{
-            alert("You were wrong!");
-        }
+
         $(".question").hide();
         $(".error").hide();
+        questionActive = false;
+
+        if (userAnswer == realAnswer){
+            console.log("You were right!");
+            return true;
+        }
+        else{
+            console.log("You were wrong!");
+            return false;
+        }
+
     }
 }
 
 $("#run").on('click', function(){
     
     $(".question").hide();
+    questionActive = false;
 
     // what to do when running away?
 
