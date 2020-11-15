@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     high_score = db.Column(db.Integer, index = True)   ###Compare this to previous high score of another user
     position = db.Column(db.Integer,index = True) 
+    world_seed = db.Column(db.Integer, db.ForeignKey('world.seed'))
 
     def __repr__(self):
         return '<User {}, world={}, position={}>'.format(self.username, self.world, self.position)
@@ -35,6 +36,18 @@ class User(UserMixin, db.Model):
         return User.query.get(id)
 
 
+class Hex(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    broken = db.Column(db.Float, index=True) 
+    world_seed = db.Column(db.Integer, db.ForeignKey('world.seed'))
+
+    def __repr__(self):
+        return '<Hex Number {}>'.format(self.id)
+
+    def breaking(self):
+        self.broken = datetime.now().timestamp()
+
+
 class World(db.Model):
     seed = db.Column(db.String(64), primary_key=True)
     hexes = db.relationship('Hex', backref='world', lazy='dynamic')
@@ -42,17 +55,6 @@ class World(db.Model):
 
     def __repr__(self):
         return '<World seed={}>'.format(self.seed)
-
-
-class Hex(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    broken = db.Column(db.Float, index=True) 
-
-    def __repr__(self):
-        return '<Hex Number {}>'.format(self.id)
-
-    def breaking(self):
-        self.broken = datetime.now().timestamp()
 
 
 class QuestionList(db.Model):
