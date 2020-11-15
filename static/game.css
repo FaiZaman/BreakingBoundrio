@@ -21,3 +21,17 @@
 .hexagon :hover {
   opacity: 0.5;
 }
+
+.question {
+  position: absolute;
+  margin: auto;
+  width: 95%;
+  right: 50%;
+  bottom: 60%;
+  transform: translate(50%, 50%);
+}
+
+.error{
+  color: red;
+  font-weight: bold;
+}
