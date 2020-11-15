@@ -1,3 +1,4 @@
+// hi Faiz
 var windowWidth = $(window).width() - 20,
     windowHeight = $(window).height() - 20,
     radius = 80;
