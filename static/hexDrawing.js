@@ -199,7 +199,6 @@ function movePlayer(newPos) {
     questionActive = popupQuestion(newTile);
     var answer = null;
     var correct = null;
-
     if (questionActive) {
         $("#submit-answer").on('click', function () {
             correct = verifyAnswer();
@@ -229,6 +228,16 @@ function movePlayer(newPos) {
         oldTile.removeClass("player");
         newTile.addClass("player ");
         playerPos = newPos;
+    }
+    var y_diff = (newPos % 100) - (centerHex % 100)
+        + 0.5; // vertical offset, in hexes (equ. radii)
+    var x_diff = Math.floor(newPos / 100) - Math.floor(centerHex / 100); // horizontal offset, (number of rows)
+    console.log("diff", x_diff,y_diff);
+    if (Math.abs(y_diff) > windowHeight/radius/4 || Math.abs(x_diff)>windowWidth/radius/4){
+        console.log("Recenter...");
+        centerHex = newPos;
+        $("g").remove();
+        draw();
     }
 }
 
