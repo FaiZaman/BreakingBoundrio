@@ -17,8 +17,9 @@ cd BreakingBoundrio
 2. Use `pip install -r requirements.txt` to install all Flask requirements.
 3. In the app direcotry base, run `export FLASK_APP=wsgi.py` and optionally `export FLASK_ENV=development`. On Windows, use `set` instead of `export`.
 4. Run `flask db init` to initialise the SQLAlchemy database if you haven't done so before. If you have, skip this step.
-5. Run `flask db migrate` to generate database migrations, followed by `flask db upgrade` to implement the migrations.
-6. Use `flask run` to run the app.
+5. Run `flask db migrate` to generate database migrations, 
+6. Run `flask db upgrade` to implement the migrations.
+7. Use `flask run` to run the app.
 
 # Migrating the database
 
