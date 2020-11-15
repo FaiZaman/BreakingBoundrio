@@ -198,7 +198,7 @@ $(document).ready(function(){
         // if this is a red hexagon, bring up notification that asks a question
         // TODO: this only runs when the player walks into this wall
         const filled = $(this).attr("class");
-        const random_filler = fillers[Math.floor(Math.random() * fillers.length)];
+        const random_filler = maths[Math.floor(Math.random() * maths.length)];
         const random_question_data = question_data[Math.floor(Math.random() * question_data.length)];
 
         const question = random_question_data['question'];
@@ -215,7 +215,17 @@ $(document).ready(function(){
     });
 
     $("#submit-answer").on('click', function(){
+        verifyAnswer();
+    });
 
+    $('#answer').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            verifyAnswer(); 
+        }
+    });
+
+    function verifyAnswer(){
         const question = $(".question-text").text();
         const userAnswer = $("#answer").val();
 
@@ -236,8 +246,7 @@ $(document).ready(function(){
             $(".question").hide();
             $(".error").hide();
         }
-
-    });
+    }
 
     $("#run").on('click', function(){
         

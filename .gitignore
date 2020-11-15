@@ -1,4 +1,4 @@
-.idea/
+.idea
 config.py
 /.vscode
 
@@ -141,5 +141,7 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-/migrations
+# Flask-Migrate migrations and database
+migrate/
 app.db
+migrations/

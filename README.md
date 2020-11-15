@@ -11,9 +11,15 @@ git clone https://github.com/FaiZaman/BreakingBoundrio.git
 cd BreakingBoundrio
 ```
 
-# Setting up Flask environment
+# Setting up Flask environment
 
-1) Create a virtual environment for the Flask dependancies (`virtualenv venv`)
-2) Use `pip install -r requirements.txt` to install all Flask requirements.
-3) In the app direcotry base, run `export FLASK_APP=wsgi.py` and optionally `export FLASK_ENV=development`. On Windows, use `set` instead of `export`.
-4) Use `flask run` to run the app.
+1. Create a virtual environment for the Flask dependancies (`virtualenv venv`)
+2. Use `pip install -r requirements.txt` to install all Flask requirements.
+3. In the app direcotry base, run `export FLASK_APP=wsgi.py` and optionally `export FLASK_ENV=development`. On Windows, use `set` instead of `export`.
+4. Run `flask db init` to initialise the SQLAlchemy database if you haven't done so before. If you have, skip this step.
+5. Run `flask db migrate` to generate database migrations, followed by `flask db upgrade` to implement the migrations.
+6. Use `flask run` to run the app.
+
+# Migrating the database
+
+When changes are made to the database models in our app, we need to run Flask-Migrate to apply those changes to the database. Use steps 3-6 above to carry out these migrations. If you get an error in step 5, delete the `migrations/` folder and the `app.db` file and try again.
