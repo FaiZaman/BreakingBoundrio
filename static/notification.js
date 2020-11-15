@@ -13,7 +13,7 @@ $(document).ready(function(){
             question_data = data;
             console.log(data);
         },
-        failure: function(data){
+        failure: function(){
             console.log("Something went wrong!");
         }
       });
@@ -27,7 +27,7 @@ $(document).ready(function(){
                 question_data = data;
                 console.log(data);
             },
-            failure: function(data){
+            failure: function(){
                 console.log("Something went wrong!");
             }
           });
@@ -159,23 +159,38 @@ $(document).ready(function(){
 
     // =====================================================================================
 
-    var fillers = [
-        "A troll wearing a historian's coat appears from behind a wall! He shouts at you:",
+    var maths = [
         "A mammoth with an equals sign on its forehead comes tumbling down a mountain! It roars, and\
         you translate from Mammothish quickly:",
-        "Adolf Hitler himself rises from the ashes of his Führerbunker! Upon seeing you, he growls\
-        and mutters:",
         "A tall Viking brandishing a protractor emerges from the valley below!\
         He bellows in his Nordic tongue:",
-        "Shrek rises up from his musty swamp with a bloody ruler in his hand!\
-        Upon spotting you, he yells:",
         "Pirates searching for their compass attack from behind a bush! They scream unintelligibly:",
+        "A giantic man, holding an equally gigantic ruler, lumbers towards you! He groans deeply:",
+        "A swarm of wasps buzzes angrily in the shape of a minus sign! They morph into the form:",
+        "A trio of mathematical moles emerges from the ground below you! They pop up in the form of\
+        Morse code and you attempt to understand their frustrations:"
+    ];
+
+    var history = [
+        "A troll wearing a historian's coat appears from behind a wall! He shouts at you:",
         "The Loch Ness Monster, wearing Cleopatra's necklace, impossibly spashes up from a tiny puddle!\
         It wails loudly:",
         "Medusa slithers up to you carrying a large history book! You glance away from her face just\
         as she utters:",
-        "Ted Bundy appears and attempts to charm you with his collection of antiquities! His smooth\
-        voice sends chills down your spine:"
+        "Aristotle himself rises from his grave! Upon seeing you, he growls and mutters:",
+        "Rats bearing the Black Death scurry towards you! They squeak highly:",
+        "Poseidon swallows the beach you stand on with tremendous waves of the ocean! Deeply, he asks:"
+    ];
+
+    var physics = [
+        "Einstein traipses over using the theory of relativity! He smiles knowingly and asks:",
+        "Stephen Hawking rides up to you in his super fast wheelchair! His voice generator spits out:",
+        "Marie Curie, befuddled with radiation poisoning, tramples over in a daze! She questions\
+        you unhappily:",
+        "Rosiland Franklin rolls down a hill and comes to a stop before you! She gets up and\
+        begs of you:",
+        "Isaac Newton comes barging around a tree throwing apples at you! He yelps simultaneously:",
+        "Erwin Schrödinger strolls along, deep in thought! He utters one of his thoughts out loud:" 
     ];
 
     $("path").on('click', function(){
@@ -183,7 +198,7 @@ $(document).ready(function(){
         // if this is a red hexagon, bring up notification that asks a question
         // TODO: this only runs when the player walks into this wall
         const filled = $(this).attr("class");
-        const random_filler = fillers[Math.floor(Math.random() * fillers.length)];
+        const random_filler = maths[Math.floor(Math.random() * maths.length)];
         const random_question_data = question_data[Math.floor(Math.random() * question_data.length)];
 
         const question = random_question_data['question'];
@@ -232,6 +247,14 @@ $(document).ready(function(){
             $(".error").hide();
         }
     }
+
+    $("#run").on('click', function(){
+        
+        $(".question").hide();
+
+        // what to do when running away?
+
+    });
 
 
 
