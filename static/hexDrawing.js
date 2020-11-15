@@ -1,6 +1,6 @@
 // sorry Faiz
-var windowWidth = $(window).width() - 20,
-    windowHeight = $(window).height() - 20,
+var windowWidth = $(window).width(),
+    windowHeight = $(window).height(),
     radius = 80;
 
 var svg = d3.select("body").append("svg")
