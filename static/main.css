@@ -156,3 +156,7 @@ a {
   font-style: italic;
   font-size: 1.2rem;
 }
+
+#fontMain {
+  font-family: 'Titillium Web', sans-serif;
+}

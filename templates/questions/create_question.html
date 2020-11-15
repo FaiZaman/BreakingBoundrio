@@ -18,17 +18,20 @@
   </div>
 </header>
 <main>
-  <div class='card gapsBetween lbbg'>
+  <body>
+    <div class='card gapsBetween'>
+      <h2>Add any questions you want to be included in the game</h2>
       <form class="formStyle" action="" method="post" novalidate>
           {{ form.hidden_tag() }}
-          <dl class="form-group">
-              {{ render_field(form.question, class='form-control titlecard', placeholder='Question') }}
-              {{ render_field(form.answer, class='form-control titlecard', placeholder='Answer') }}
-          </dl>
-          <dl>
-              {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
-          </dl>
+        <dl class="form-group" id='fontMain'>
+          {{ render_field(form.question, class='form-control titlecard', placeholder='Question') }}
+          {{ render_field(form.answer, class='form-control titlecard', placeholder='Answer') }}
+        </dl>
+        <dl>
+          {{ render_field(form.submit, class='btn btn-lg btn-secondary btn-block') }}
+        </dl>
       </form>
     </div>
+  </body>
 </main>
 {% endblock %}

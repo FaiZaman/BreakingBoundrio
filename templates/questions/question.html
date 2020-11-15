@@ -18,7 +18,7 @@
 </header>
 <main>
   <div class="card text-center lbbg">
-    <div class="card-body">
+    <div class="card-body" id='mainFont'>
       <h5 class="card-title largeFont"><a href="{{ url_for('questions.view_list', list_id=list.id) }}">{{list.title}}</a></h5>
         <ul class="list-group list-group-flush">
             <li class="list-group-item list-group-item-active">{{ question.question }}</li>
