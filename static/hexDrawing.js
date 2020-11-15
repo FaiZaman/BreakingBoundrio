@@ -182,31 +182,42 @@ function movePlayer(newPos) {
     var newTile = $("#" + newPos);
     questionActive = popupQuestion(newTile);
     var answer = null;
+    var correct = null;
 
     if (questionActive){
         $("#submit-answer").on('click', function(){
-            answer = verifyAnswer();
+            correct = verifyAnswer();
+            if (correct){
+                oldTile.removeClass("player");
+                newTile.addClass("player ");
+                playerPos = newPos;
+                console.log("moving")
+            }
         });
-        
+
         $('#answer').keypress(function(event){
             var keycode = (event.keyCode ? event.keyCode : event.which);
             if(keycode == '13'){
-                answer = verifyAnswer(); 
+                correct = verifyAnswer(); 
+                if (correct){
+                    oldTile.removeClass("player");
+                    newTile.addClass("player ");
+                    playerPos = newPos;
+                    console.log("moving")
+                }
             }
         });
     
-        if (answer){
-            oldTile.removeClass("player");
-            newTile.addClass("player ");
-            playerPos = newPos;
-            console.log("moving")
-        }
     }
     else{
         oldTile.removeClass("player");
         newTile.addClass("player ");
         playerPos = newPos;
     }
+}
+
+function updatePos(){
+    
 }
 
 function posFromNo(n, centerHex) {
@@ -295,15 +306,20 @@ function verifyAnswer(){
         $(".error").show();
     }
     else {
-        if (userAnswer == realAnswer){
-            console.log("You were right!");
-        }
-        else{
-            console.log("You were wrong!");
-        }
+
         $(".question").hide();
         $(".error").hide();
         questionActive = false;
+
+        if (userAnswer == realAnswer){
+            console.log("You were right!");
+            return true;
+        }
+        else{
+            console.log("You were wrong!");
+            return false;
+        }
+
     }
 }
 
