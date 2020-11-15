@@ -14,7 +14,7 @@ console.log("Playerpos", playerPos, "centerHex", centerHex);
 var questionActive = false;
 var obstacles = [];
 var world = 0;
-
+var targetObstacle = 0;
 
 let question_data = []; // array of questions
 
@@ -43,6 +43,17 @@ $.ajax({
     },
     failure: function () {
         console.log("Something went wrong!");
+    }
+});
+
+$("#submit-answer").on('click', function () {
+    correct = verifyAnswer();
+    if (correct) {
+        console.log("Correct answer - update & recenter...");
+        centerHex = targetObstacle;
+        playerPos = targetObstacle;
+        $("g").remove();
+        draw();
     }
 });
 
@@ -196,35 +207,11 @@ function movePlayer(newPos) {
     console.log("Moving player from", playerPos, "to", newPos);
     var oldTile = $("#" + playerPos);
     var newTile = $("#" + newPos);
-    var prevPos = playerPos;
     questionActive = popupQuestion(newTile);
     var answer = null;
     var correct = null;
     if (questionActive) {
-        $("#submit-answer").on('click', function () {
-            correct = verifyAnswer();
-            if (correct && prevPos === playerPos) {
-                oldTile.removeClass("player");
-                newTile.addClass("player ");
-                console.log("Verified answer - moving from ", playerPos, " to ", newPos);
-                playerPos = newPos;
-            }
-        });
-
-        $('#answer').keypress(function (event) {
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if (keycode === '13') {
-                correct = verifyAnswer();
-                if (correct) {
-                    oldTile.removeClass("player");
-                    newTile.addClass("player ");
-                    console.log("Keypress verified answer - moving from ", playerPos, " to ", newPos);
-                    playerPos = newPos;
-                    console.log("moving")
-                }
-            }
-        });
-
+        targetObstacle = newPos;
     }
     else {
         oldTile.removeClass("player");
@@ -234,7 +221,6 @@ function movePlayer(newPos) {
     }
     var y_diff = (newPos % 100) - (centerHex % 100) + 0.5; // vertical offset, in hexes (equ. radii)
     var x_diff = Math.floor(newPos / 100) - Math.floor(centerHex / 100); // horizontal offset, (number of rows)
-    // console.log("diff", x_diff, y_diff);
     if (Math.abs(y_diff) > windowHeight / radius / 4 || Math.abs(x_diff) > windowWidth / radius / 4) {
         console.log("Recenter...");
         centerHex = newPos;
