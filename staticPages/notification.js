@@ -148,7 +148,17 @@ $(document).ready(function(){
     });
 
     $("#submit-answer").on('click', function(){
+        verifyAnswer();
+    });
 
+    $('#answer').keypress(function(event){
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+        if(keycode == '13'){
+            verifyAnswer(); 
+        }
+    });
+
+    function verifyAnswer(){
         // TODO: verify answer is correct, either from database or clientside
         if ($("#answer").val() == ""){
             $(".error").show();
@@ -157,15 +167,6 @@ $(document).ready(function(){
             $(".question").hide();
             $(".error").hide();
         }
-
-    });
-
-    $("#run").on('click', function(){
-        
-        $(".question").hide();
-
-        // what to do when running away?
-
-    });
+    }
 
 });
